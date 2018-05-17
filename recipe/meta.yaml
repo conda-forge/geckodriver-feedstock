@@ -12,7 +12,7 @@ source:
   sha256: 0bee8be4841147528c41417e4eb1f44eaddd7aa16b267d6237ec2abafecf71b2
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc!=14]
   msvc_compiler: 14.0  # [win]
 
