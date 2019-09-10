@@ -1,5 +1,5 @@
 {% set name = "geckodriver" %}
-{% set version = "0.24.0" %}
+{% set version = "0.25.0" %}
 
 package:
   name: {{ name }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/mozilla/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: e6f86b3b6411f078c0a762f978c00ee99926463036a68be01d111bd91f25340e
+  sha256: 9ba9b1be1a2e47ddd11216ce863903853975a4805e72b9ed5da8bcbcaebbcea9
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win and vc!=14]
   msvc_compiler: 14.0  # [win]
 
