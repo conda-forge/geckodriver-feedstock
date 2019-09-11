@@ -22,6 +22,7 @@ requirements:
 
 test:
   commands:
+    - which geckodriver  # [not win]
     - geckodriver --version
     - geckodriver --help
     - conda inspect linkages -p $PREFIX {{ name }}  # [not win]
