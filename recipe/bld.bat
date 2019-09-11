@@ -1,6 +1,7 @@
 @ECHO ON
 rustc -V
 cargo -V
+cd testing\geckodriver
 cargo build --release --verbose                   || goto :error
 cargo install --root "%PREFIX%" --path .          || goto :error
 if not exist "%SCRIPTS%" md "%SCRIPTS%"           || goto :error

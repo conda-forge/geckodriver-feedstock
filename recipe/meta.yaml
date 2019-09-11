@@ -1,13 +1,15 @@
 {% set name = "geckodriver" %}
 {% set version = "0.25.0" %}
+{% set changeset = "bdb64cf16b68c4a7212ba16aef425bce66d8f4ca" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/mozilla/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 9ba9b1be1a2e47ddd11216ce863903853975a4805e72b9ed5da8bcbcaebbcea9
+  fn: {{ name }}-{{ version }}-{{ changeset }}.tar.gz
+  url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.tar.gz/testing/
+  sha256: fa74a041e905f7007eb25f4a68d938b44142a1235dd8f0281ed62dc6adda1341
 
 build:
   number: 0

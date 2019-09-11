@@ -9,6 +9,7 @@ else
   export RUSTFLAGS="-C link-args=-Wl,-rpath-link,${PREFIX}/lib"
 fi
 
+cd testing/geckodriver
 cargo build --release --verbose
 cargo install --bin "${PKG_NAME}" --root "${PREFIX}"
 
