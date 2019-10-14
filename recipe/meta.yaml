@@ -1,35 +1,49 @@
 {% set name = "geckodriver" %}
-{% set version = "0.24.0" %}
+{% set version = "0.26.0" %}
+{% set changeset = "e9783a644016aa9b317887076618425586730d73" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/mozilla/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: e6f86b3b6411f078c0a762f978c00ee99926463036a68be01d111bd91f25340e
+  # doesn't contain anything useful, but mozilla-central has no symbolic tags
+  # for geckodriver releases so there isn't anything for the bot to find
+  - url: https://github.com/mozilla/geckodriver/archive/v{{ version }}.tar.gz
+    sha256: c6acabacf8063ff59926f6b8721968a6eaaa35050b2988868a2d8d37ef7c90dd
+    folder: just-for-the-bot-to-find-updates-properly
+  # needs an fn because of the unique URL structure
+  - fn: {{ name }}-{{ version }}-{{ changeset }}.tar.gz
+    # all of /testing because of other crates which no longer get published (?)
+    url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.tar.gz/testing
+    sha256: 2f8357062af904e43c10afbfb0387c11eeb48722267a81bad87aacc6ec835e70
 
 build:
-  number: 1
-  skip: true  # [win and vc!=14]
-  msvc_compiler: 14.0  # [win]
+  number: 0
+  skip: true  # [win and vc<14]
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [unix]
-    - {{ compiler('cxx') }}  # [unix]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - rust
 
 test:
+  downstreams:
+    - firefox  >=60
   commands:
     - geckodriver --version
     - geckodriver --help
+    # this important just so we know that the version is accurate
+    # https://github.com/mozilla/geckodriver/issues/1615
+    - geckodriver --version | grep {{ version }}  # [not win]
     - conda inspect linkages -p $PREFIX {{ name }}  # [not win]
     - conda inspect objects -p $PREFIX {{ name }}  # [osx]
 
 about:
   home: https://github.com/mozilla/geckodriver
   license: MPL-2.0
+  # non of the above actually include the license
   license_file: '{{ environ["RECIPE_DIR"] }}/mpl-2.0.txt'
   summary: |
     geckodriver is a proxy for using W3C WebDriver-compatible clients to

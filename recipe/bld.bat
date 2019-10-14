@@ -1,10 +1,14 @@
 @ECHO ON
 rustc -V
 cargo -V
-cargo build --release --verbose
-IF ERRORLEVEL 1 EXIT /B 1
-cargo install --bin %PKG_NAME% --root %PREFIX%
-IF ERRORLEVEL 1 EXIT /B 1
-MOVE %PREFIX%\bin\%PKG_NAME%.exe %SCRIPTS%\%PKG_NAME%.exe
-IF ERRORLEVEL 1 EXIT /B 1
-DEL /F /Q %PREFIX%\.crates.toml
+cd testing\geckodriver
+cargo build --release --verbose                   || goto :error
+cargo install --root "%PREFIX%" --path .          || goto :error
+if not exist "%SCRIPTS%" md "%SCRIPTS%"           || goto :error
+move "%PREFIX%\bin\geckodriver.exe" "%SCRIPTS%"   || goto :error
+del /F /Q "%PREFIX%\.crates.toml"
+goto :EOF
+
+:error
+echo Failed with error #%errorlevel%.
+exit 1
