@@ -11,6 +11,6 @@ fi
 
 cd testing/geckodriver
 cargo build --release --verbose
-cargo install --bin "${PKG_NAME}" --root "${PREFIX}"
+cargo install --root "${PREFIX}" --path .
 
 rm -f "${PREFIX}/.crates.toml"

@@ -1,22 +1,16 @@
 {% set name = "geckodriver" %}
-{% set version = "0.26.0" %}
-{% set changeset = "e9783a644016aa9b317887076618425586730d73" %}
+{% set version = "0.27.0" %}
+{% set changeset = "09dbca8803460053ac9a3b89d9e049065df1c963" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  # doesn't contain anything useful, but mozilla-central has no symbolic tags
-  # for geckodriver releases so there isn't anything for the bot to find
-  - url: https://github.com/mozilla/geckodriver/archive/v{{ version }}.tar.gz
-    sha256: c6acabacf8063ff59926f6b8721968a6eaaa35050b2988868a2d8d37ef7c90dd
-    folder: just-for-the-bot-to-find-updates-properly
-  # needs an fn because of the unique URL structure
-  - fn: {{ name }}-{{ version }}-{{ changeset }}.tar.gz
-    # all of /testing because of other crates which no longer get published (?)
-    url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.tar.gz/testing
-    sha256: 2f8357062af904e43c10afbfb0387c11eeb48722267a81bad87aacc6ec835e70
+  fn: {{ name }}-{{ version }}-{{ changeset }}.zip
+  # all of /testing because of other crates which no longer get published (?)
+  url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
+  sha256: c2078f3d529c88288bc0856f23bc53e9a5fce88136c529e99c7bc10872891f62
 
 build:
   number: 0
@@ -30,7 +24,7 @@ requirements:
 
 test:
   downstreams:
-    - firefox  >=60
+    - firefox >=60
   commands:
     - geckodriver --version
     - geckodriver --help
