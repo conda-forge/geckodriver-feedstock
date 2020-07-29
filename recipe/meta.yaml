@@ -1,6 +1,8 @@
 {% set name = "geckodriver" %}
 {% set version = "0.27.0" %}
-{% set changeset = "09dbca8803460053ac9a3b89d9e049065df1c963" %}
+
+# this is published in short form on the github release page
+{% set changeset = "90ec81285ff6287cb2824b29ddebb7818cc7b96b" %}
 
 package:
   name: {{ name }}
@@ -8,9 +10,9 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}-{{ changeset }}.zip
-  # all of /testing because of other crates which no longer get published (?)
+  # all of /testing because of other unpublished crates
   url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-  sha256: c2078f3d529c88288bc0856f23bc53e9a5fce88136c529e99c7bc10872891f62
+  sha256: 4809d4a181e33796488d8481120427c717e54e3deedccb253a3bdbf2dc931c76
 
 build:
   number: 0
@@ -24,6 +26,8 @@ requirements:
 
 test:
   downstreams:
+    # published here:
+    # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
     - firefox >=60
   commands:
     - geckodriver --version
