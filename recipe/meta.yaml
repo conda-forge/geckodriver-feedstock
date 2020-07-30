@@ -25,10 +25,11 @@ requirements:
     - rust
 
 test:
-  downstreams:
-    # published here:
-    # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-    - firefox >=60
+  # TODO: restore this, may need additional iteration vs firefox-feedstock
+  # downstreams:
+  #   # published here:
+  #   # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
+  #   - firefox >=60
   commands:
     - geckodriver --version
     - geckodriver --help
