@@ -26,10 +26,14 @@ requirements:
 
 test:
   # TODO: restore this, may need additional iteration vs firefox-feedstock
-  # downstreams:
-  #   # published here:
-  #   # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-  #   - firefox >=60
+  downstreams:
+    # published here:
+    # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
+    # - firefox >=60
+    # this is the version is presently failing the license test
+    - firefox =79  # [not osx]
+    - firefox =68
+    - firefox =78
   commands:
     - geckodriver --version
     - geckodriver --help
