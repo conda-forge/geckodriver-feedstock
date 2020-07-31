@@ -16,8 +16,9 @@ from selenium.webdriver.firefox.options import Options
 
 import pytest
 
-# on the CI images, glibc is too old
-IGNORE_FIREFOX_FAIL = "linux" in sys.platform.lower()
+# on the old CI images, glibc is too old
+# IGNORE_FIREFOX_FAIL = "linux" in sys.platform.lower()
+IGNORE_FIREFOX_FAIL = False
 
 if "IGNORE_FIREFOX_FAIL" in os.environ:
     IGNORE_FIREFOX_FAIL = json.loads(os.environ["IGNORE_FIREFOX_FAIL"])
