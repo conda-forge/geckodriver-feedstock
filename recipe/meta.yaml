@@ -47,7 +47,8 @@ test:
     - copy {{ RECIPE_DIR }}\test_selenium.py .  # [win]
     - copy {{ RECIPE_DIR }}\setup.cfg .  # [win]
     - cp {{ RECIPE_DIR }}/test_selenium.py {{ RECIPE_DIR }}/setup.cfg .  # [not win]
-    - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
+    # TODO: may be needed
+    # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
     - python -m pytest
 
 about:
