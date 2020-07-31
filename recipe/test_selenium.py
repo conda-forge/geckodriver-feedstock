@@ -64,11 +64,13 @@ def test_read_license(tmp_path):
     try:
         options = Options()
         options.headless = True
-        options.log_level = "trace"
-        driver = webdriver.Firefox(options=options,
-                                   firefox_binary=str(FIREFOX),
-                                   executable_path=str(GECKODRIVER),
-                                   service_log_path=str(geckodriver_log))
+        driver = webdriver.Firefox(
+            options=options,
+            firefox_binary=str(FIREFOX),
+            executable_path=str(GECKODRIVER),
+            service_log_path=str(geckodriver_log),
+            service_args=["--log", "trace"]
+        )
         driver.get("about:license")
 
         if driver.page_source:
@@ -82,6 +84,7 @@ def test_read_license(tmp_path):
         print(traceback.format_exc())
         if not IGNORE_FIREFOX_FAIL:
             errors += [err]
+            raise Exception("license check failed") from err
     finally:
         errors += list(_dump_logs([geckodriver_log]))
 
