@@ -1,6 +1,6 @@
 """ test whether firefox is viable with geckodriver and selenium
 
-    Adaptes from
+    Adapted from
     https://github.com/conda-forge/firefox-feedstock/blob/master/recipe/run_test.py
 """
 import sys
@@ -27,6 +27,9 @@ if "IGNORE_FIREFOX_FAIL" in os.environ:
 FIREFOX = Path(sys.prefix) / "bin" / "FirefoxApp" / "firefox"
 GECKODRIVER = Path(sys.prefix) / "bin" / "geckodriver"
 
+FIREFOX_VERSION = os.environ["PKG_VERSION"] if os.environ["PKG_NAME"] == "firefox" else None
+GECKODRIVER_VERSION = os.environ["PKG_VERSION"] if os.environ["PKG_NAME"] == "geckodriver" else None
+
 
 if "win32" in sys.platform.lower():
     FIREFOX = Path(os.environ["LIBRARY_BIN"]) / "firefox.exe"
@@ -34,8 +37,8 @@ if "win32" in sys.platform.lower():
 
 
 @pytest.mark.parametrize("path,expected_version,ignore_fail", [
-    [FIREFOX, None, IGNORE_FIREFOX_FAIL],
-    [GECKODRIVER, os.environ["PKG_VERSION"], False]
+    [FIREFOX, FIREFOX_VERSION, IGNORE_FIREFOX_FAIL],
+    [GECKODRIVER, GECKODRIVER_VERSION, False]
 ])
 def test_binary_version(path, expected_version, ignore_fail):
     """ assert that the path exists, is callable, and maybe has the right version
