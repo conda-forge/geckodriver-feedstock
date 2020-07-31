@@ -100,7 +100,7 @@ def _dump_logs(logs):
     for log in logs:
         print(f"Checking {log.name}...\n")
         if log.exists():
-            print(log.read_text())
+            print(log.read_text(encoding="utf-8"))
         else:
             yield f"... {log.name} was NOT created!"
         print(f"... end {log.name} check")
