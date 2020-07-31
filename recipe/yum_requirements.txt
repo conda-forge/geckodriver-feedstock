@@ -1,3 +1,4 @@
+gtk3
 libX11
 libXcomposite
 libXcursor
@@ -7,3 +8,4 @@ libXfixes
 libXi
 libXinerama
 libXrandr
+libXt

@@ -32,10 +32,6 @@ test:
     - pytest-azurepipelines
     - python >=3.6
     - selenium
-    # Adding is not really yet effective, see:
-    # - https://github.com/conda-forge/firefox-feedstock/pull/18
-    # - https://github.com/conda-forge/firefox-feedstock/pull/26
-    - gtk3
   commands:
     - geckodriver --version
     - geckodriver --help

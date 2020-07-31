@@ -21,7 +21,7 @@ import pytest
 def binary_paths():
     plat = sys.platform.lower()
     if "win32" in plat:
-        firefox = Path(os.environ["LIBRARY_BIN"]) / "firefox.exe",
+        firefox = Path(os.environ["LIBRARY_BIN"]) / "firefox.exe"
         geckodriver = Path(os.environ["SCRIPTS"]) / "geckodriver.exe"
     else:
         geckodriver = Path(sys.prefix) / "bin" / "geckodriver"
