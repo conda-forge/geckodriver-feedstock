@@ -16,49 +16,32 @@ from selenium.webdriver.firefox.options import Options
 
 import pytest
 
-# on the old CI images, glibc is too old
-# IGNORE_FIREFOX_FAIL = "linux" in sys.platform.lower()
-IGNORE_FIREFOX_FAIL = False
 
-if "IGNORE_FIREFOX_FAIL" in os.environ:
-    IGNORE_FIREFOX_FAIL = json.loads(os.environ["IGNORE_FIREFOX_FAIL"])
+@pytest.fixture
+def binary_paths():
+    plat = sys.platform.lower()
+    if "win32" in plat:
+        firefox = Path(os.environ["LIBRARY_BIN"]) / "firefox.exe",
+        geckodriver = Path(os.environ["SCRIPTS"]) / "geckodriver.exe"
+    else:
+        geckodriver = Path(sys.prefix) / "bin" / "geckodriver"
+        app_dir = Path(sys.prefix) / "bin" / "FirefoxApp"
 
-# bin/firefox is a wrapper script
-FIREFOX = Path(sys.prefix) / "bin" / "FirefoxApp" / "firefox"
-GECKODRIVER = Path(sys.prefix) / "bin" / "geckodriver"
+        if "linux" in plat:
+            firefox = app_dir / "firefox"
+        else:
+            firefox = app_dir / "Contents" / "MacOS" / "firefox"
 
-FIREFOX_VERSION = os.environ["PKG_VERSION"] if os.environ["PKG_NAME"] == "firefox" else None
-GECKODRIVER_VERSION = os.environ["PKG_VERSION"] if os.environ["PKG_NAME"] == "geckodriver" else None
+    assert firefox.exists()
+    assert geckodriver.exists()
+
+    return dict(
+        firefox_binary=str(firefox),
+        executable_path=str(geckodriver),
+    )
 
 
-if "win32" in sys.platform.lower():
-    FIREFOX = Path(os.environ["LIBRARY_BIN"]) / "firefox.exe"
-    GECKODRIVER = Path(os.environ["SCRIPTS"]) / "geckodriver.exe"
-
-
-@pytest.mark.parametrize("path,expected_version,ignore_fail", [
-    [FIREFOX, FIREFOX_VERSION, IGNORE_FIREFOX_FAIL],
-    [GECKODRIVER, GECKODRIVER_VERSION, False]
-])
-def test_binary_version(path, expected_version, ignore_fail):
-    """ assert that the path exists, is callable, and maybe has the right version
-    """
-    assert path.exists(), "binary not found"
-
-    version = ""
-    subprocess.call([str(path), "--version"])
-    proc = subprocess.Popen([str(path), "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = proc.communicate()
-
-    for pipe in [stdout, stderr]:
-        version += pipe.decode("utf-8") if pipe else ""
-
-    assert ignore_fail or version.strip(), "no output received"
-
-    if expected_version:
-        assert ignore_fail or expected_version in version
-
-def test_read_license(tmp_path):
+def test_read_license(tmp_path, binary_paths):
     geckodriver_log = tmp_path / "geckodriver.log"
     html_log = tmp_path / "license.html"
     license_png = tmp_path / "license.png"
@@ -71,10 +54,9 @@ def test_read_license(tmp_path):
         options.headless = True
         driver = webdriver.Firefox(
             options=options,
-            firefox_binary=str(FIREFOX),
-            executable_path=str(GECKODRIVER),
             service_log_path=str(geckodriver_log),
-            service_args=["--log", "trace"]
+            service_args=["--log", "trace"],
+            **binary_paths,
         )
         driver.get("about:license")
 
@@ -87,9 +69,8 @@ def test_read_license(tmp_path):
     except Exception as err:
         print(f"\nEncountered unexpected error: {type(err)} {err}...\n")
         print(traceback.format_exc())
-        if not IGNORE_FIREFOX_FAIL:
-            errors += [err]
-            raise Exception("license check failed") from err
+        errors += [err]
+        raise Exception("license check failed") from err
     finally:
         errors += list(_dump_logs([geckodriver_log]))
 
