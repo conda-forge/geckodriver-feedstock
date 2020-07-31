@@ -1,5 +1,6 @@
 {% set name = "geckodriver" %}
 {% set version = "0.27.0" %}
+{% set min_firefox = "60" %}
 
 # this is published in short form on the github release page
 {% set changeset = "90ec81285ff6287cb2824b29ddebb7818cc7b96b" %}
@@ -25,15 +26,15 @@ requirements:
     - rust
 
 test:
-  # TODO: restore this, may need additional iteration vs firefox-feedstock
-  downstreams:
-    # published here:
-    # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-    # - firefox >=60
-    # this is the version is presently failing the license test
-    - firefox =79  # [not osx]
-    - firefox =68
-    - firefox =78
+  requires:
+    - firefox >={{ min_firefox }}
+    - pytest-azurepipelines
+    - python >=3.6
+    - selenium
+    # Adding is not really yet effective, see:
+    # - https://github.com/conda-forge/firefox-feedstock/pull/18
+    # - https://github.com/conda-forge/firefox-feedstock/pull/26
+    - gtk3
   commands:
     - geckodriver --version
     - geckodriver --help
@@ -42,6 +43,11 @@ test:
     - geckodriver --version | grep {{ version }}  # [not win]
     - conda inspect linkages -p $PREFIX {{ name }}  # [not win]
     - conda inspect objects -p $PREFIX {{ name }}  # [osx]
+    - copy {{ RECIPE_DIR }}\test_selenium.py .  # [win]
+    - copy {{ RECIPE_DIR }}\setup.cfg .  # [win]
+    - cp {{ RECIPE_DIR }}/test_selenium.py {{ RECIPE_DIR }}/setup.cfg . # [not win]
+    - % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
+    - python -m pytest
 
 about:
   home: https://github.com/mozilla/geckodriver
