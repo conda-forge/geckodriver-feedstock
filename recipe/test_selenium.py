@@ -22,7 +22,8 @@ IGNORE_FIREFOX_FAIL = "linux" in sys.platform.lower()
 if "IGNORE_FIREFOX_FAIL" in os.environ:
     IGNORE_FIREFOX_FAIL = json.loads(os.environ["IGNORE_FIREFOX_FAIL"])
 
-FIREFOX = Path(sys.prefix) / "bin" / "firefox"
+# bin/firefox is a wrapper script
+FIREFOX = Path(sys.prefix) / "bin" / "FirefoxApp" / "firefox"
 GECKODRIVER = Path(sys.prefix) / "bin" / "geckodriver"
 
 
