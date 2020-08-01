@@ -25,6 +25,9 @@ requirements:
     - {{ compiler('cxx') }}
     - rust
     - sysroot_linux-64 2.17  # [linux64]
+    # only for license checking
+    - python >=3.6  # [unix]
+    - ruamel_yaml  # [unix]
 
 test:
   requires:
@@ -51,7 +54,10 @@ about:
   home: https://github.com/mozilla/geckodriver
   license: MPL-2.0
   # non of the above actually include the license
-  license_file: '{{ environ["RECIPE_DIR"] }}/mpl-2.0.txt'
+  # BEGIN license_file
+  license_file:
+    - 'library_licenses/geckodriver-MPL-2.0.txt'
+  # END license_file
   summary: |
     geckodriver is a proxy for using W3C WebDriver-compatible clients to
     interact with Gecko-based browsers.
