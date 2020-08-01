@@ -1,13 +1,15 @@
 """ test whether firefox is viable with geckodriver and selenium
 
-    Adapted from
-    https://github.com/conda-forge/firefox-feedstock/blob/master/recipe/run_test.py
+    Adapted from (and should be kept in sync with)
+    https://github.com/conda-forge/firefox-feedstock/blob/master/recipe/test_selenium.py
 """
 import sys
 import os
 import subprocess
 import traceback
 import json
+import re
+
 
 from pathlib import Path
 
@@ -16,6 +18,15 @@ from selenium.webdriver.firefox.options import Options
 
 import pytest
 
+LICENSE_CANARY = re.escape("Mozilla Public License 2.0")
+SUPPORT_CANARY = r"""<td id="application-box">\s*?Firefox\s*?</td>"""
+
+if os.environ["PKG_NAME"] == "firefox":
+    SUPPORT_CANARY = (
+        r"""<td id="version-box">\s*"""
+        f"""{re.escape(os.environ["PKG_VERSION"])}"""
+        r"""\s*</td>"""
+    )
 
 @pytest.fixture
 def binary_paths():
@@ -41,50 +52,46 @@ def binary_paths():
     )
 
 
-def test_read_license(tmp_path, binary_paths):
-    geckodriver_log = tmp_path / "geckodriver.log"
-    html_log = tmp_path / "license.html"
-    license_png = tmp_path / "license.png"
+@pytest.fixture
+def driver(tmp_path, binary_paths):
+    log = tmp_path / "geckodriver.log"
 
-    print("testing about:license with selenium...")
-    driver = None
+    options = Options()
+    options.headless = True
+    driver = webdriver.Firefox(
+        options=options,
+        service_log_path=str(log),
+        service_args=["--log", "trace"],
+        **binary_paths,
+    )
+
+    yield driver
+    driver.quit()
+
+    print(
+        "BEGIN geckodriver.log\n\n"
+        f"""{log.read_text(encoding="utf-8")}"""
+        "\n\nEND geckdriver.log"
+    )
+
+
+@pytest.mark.parametrize("thing,url,expected_re", [
+    ["license", "about:license", LICENSE_CANARY],
+    ["support", "about:support", SUPPORT_CANARY],
+])
+def test_page(thing, url, expected_re, tmp_path, driver):
+    html = tmp_path / f"{thing}.html"
+    png = tmp_path / f"{thing}.png"
+
+    print(f"checking {url} for `{expected_re}`...")
     errors = []
-    try:
-        options = Options()
-        options.headless = True
-        driver = webdriver.Firefox(
-            options=options,
-            service_log_path=str(geckodriver_log),
-            service_args=["--log", "trace"],
-            **binary_paths,
-        )
-        driver.get("about:license")
+    driver.get(url)
+    source = driver.page_source
 
-        if driver.page_source:
-            html_log.write_text(driver.page_source)
-            assert "Mozilla Public License 2.0" in driver.page_source, \
-                "couldn't even load the license page"
-            driver.save_screenshot(str(license_png))
-            assert license_png.exists()
-    except Exception as err:
-        print(f"\nEncountered unexpected error: {type(err)} {err}...\n")
-        print(traceback.format_exc())
-        errors += [err]
-        raise Exception("license check failed") from err
-    finally:
-        errors += list(_dump_logs([geckodriver_log]))
+    assert re.findall(expected_re, source)
 
-        if driver:
-            driver.quit()
+    html.write_text(driver.page_source)
 
-        assert not errors
+    driver.save_screenshot(str(png))
 
-
-def _dump_logs(logs):
-    for log in logs:
-        print(f"Checking {log.name}...\n")
-        if log.exists():
-            print(log.read_text(encoding="utf-8"))
-        else:
-            yield f"... {log.name} was NOT created!"
-        print(f"... end {log.name} check")
+    # TODO: pdf
