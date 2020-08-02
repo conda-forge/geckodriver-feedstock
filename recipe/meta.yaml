@@ -57,6 +57,8 @@ about:
   license: MPL-2.0
   license_file:
     # BEGIN license_file
+    - library_licenses/adler-LICENSE-APACHE
+    - library_licenses/adler-LICENSE-MIT
     - library_licenses/aho-corasick-LICENSE
     - library_licenses/aho-corasick-LICENSE-MIT
     - library_licenses/ansi_term-LICENCE
@@ -84,6 +86,8 @@ about:
     - library_licenses/clap-LICENSE-APACHE
     - library_licenses/clap-LICENSE-MIT
     - library_licenses/constant_time_eq-LICENSE.txt
+    - library_licenses/cookie-LICENSE-APACHE
+    - library_licenses/cookie-LICENSE-MIT
     - library_licenses/crc32fast-LICENSE-APACHE
     - library_licenses/crc32fast-LICENSE-MIT
     - library_licenses/crossbeam-utils-LICENSE-APACHE
@@ -92,6 +96,10 @@ about:
     - library_licenses/digest-LICENSE-MIT
     - library_licenses/dirs-LICENSE-APACHE
     - library_licenses/dirs-LICENSE-MIT
+    - library_licenses/dirs-sys-LICENSE-APACHE
+    - library_licenses/dirs-sys-LICENSE-MIT
+    - library_licenses/dtoa-LICENSE-APACHE
+    - library_licenses/dtoa-LICENSE-MIT
     - library_licenses/fake-simd-LICENSE-APACHE
     - library_licenses/fake-simd-LICENSE-MIT
     - library_licenses/flate2-LICENSE-MIT
@@ -118,6 +126,17 @@ about:
     - library_licenses/generic-array-LICENSE
     - library_licenses/getrandom-LICENSE-APACHE
     - library_licenses/getrandom-LICENSE-MIT
+    - library_licenses/h2-LICENSE
+    - library_licenses/hashbrown-LICENSE-APACHE
+    - library_licenses/hashbrown-LICENSE-MIT
+    - library_licenses/headers-core-LICENSE
+    - library_licenses/headers-LICENSE
+    - library_licenses/http-body-LICENSE
+    - library_licenses/http-LICENSE-APACHE
+    - library_licenses/http-LICENSE-MIT
+    - library_licenses/httparse-LICENSE-APACHE
+    - library_licenses/httparse-LICENSE-MIT
+    - library_licenses/hyper-LICENSE
     - library_licenses/idna-LICENSE-APACHE
     - library_licenses/idna-LICENSE-MIT
     - library_licenses/indexmap-LICENSE
@@ -138,10 +157,14 @@ about:
     - library_licenses/log-LICENSE-MIT
     - library_licenses/matches-LICENSE
     - library_licenses/memchr-LICENSE-MIT
+    - library_licenses/mime_guess-LICENSE
+    - library_licenses/mime-LICENSE
     - library_licenses/miniz_oxide-LICENSE
     - library_licenses/mio-LICENSE
     - library_licenses/miow-LICENSE-APACHE
     - library_licenses/miow-LICENSE-MIT
+    - library_licenses/msdos_time-LICENSE-APACHE
+    - library_licenses/msdos_time-LICENSE-MIT
     - library_licenses/net2-LICENSE-APACHE
     - library_licenses/net2-LICENSE-MIT
     - library_licenses/num-integer-LICENSE
@@ -162,6 +185,8 @@ about:
     - library_licenses/pin-utils-LICENSE-APACHE
     - library_licenses/pin-utils-LICENSE-MIT
     - library_licenses/plist-LICENSE
+    - library_licenses/podio-LICENSE-APACHE
+    - library_licenses/podio-LICENSE-MIT
     - library_licenses/ppv-lite86-LICENSE-APACHE
     - library_licenses/ppv-lite86-LICENSE-MIT
     - library_licenses/proc-macro2-LICENSE-APACHE
@@ -186,10 +211,13 @@ about:
     - library_licenses/remove_dir_all-LICENCE-MIT
     - library_licenses/rust-argon2-LICENSE-APACHE
     - library_licenses/rust-argon2-LICENSE-MIT
+    - library_licenses/rust-ini-LICENSE
     - library_licenses/ryu-LICENSE-APACHE
     - library_licenses/ryu-LICENSE-BOOST
     - library_licenses/safemem-LICENSE-MIT
     - library_licenses/same-file-LICENSE-MIT
+    - library_licenses/scoped-tls-LICENSE-APACHE
+    - library_licenses/scoped-tls-LICENSE-MIT
     - library_licenses/semver-LICENSE-APACHE
     - library_licenses/semver-LICENSE-MIT
     - library_licenses/semver-parser-LICENSE-APACHE
@@ -200,8 +228,14 @@ about:
     - library_licenses/serde_json-LICENSE-MIT
     - library_licenses/serde_repr-LICENSE-APACHE
     - library_licenses/serde_repr-LICENSE-MIT
+    - library_licenses/serde_urlencoded-LICENSE-APACHE
+    - library_licenses/serde_urlencoded-LICENSE-MIT
+    - library_licenses/serde_yaml-LICENSE-APACHE
+    - library_licenses/serde_yaml-LICENSE-MIT
     - library_licenses/serde-LICENSE-APACHE
     - library_licenses/serde-LICENSE-MIT
+    - library_licenses/sha-1-LICENSE-APACHE
+    - library_licenses/sha-1-LICENSE-MIT
     - library_licenses/slab-LICENSE
     - library_licenses/socket2-LICENSE-APACHE
     - library_licenses/socket2-LICENSE-MIT
@@ -210,12 +244,24 @@ about:
     - library_licenses/syn-LICENSE-MIT
     - library_licenses/tempfile-LICENSE-APACHE
     - library_licenses/tempfile-LICENSE-MIT
+    - library_licenses/term_size-LICENSE-APACHE
+    - library_licenses/term_size-LICENSE-MIT
     - library_licenses/textwrap-LICENSE
     - library_licenses/thread_local-LICENSE-APACHE
     - library_licenses/thread_local-LICENSE-MIT
+    - library_licenses/time-LICENSE-APACHE
+    - library_licenses/time-LICENSE-MIT
+    - library_licenses/tinyvec-LICENSE-ZLIB.md
     - library_licenses/tokio-LICENSE
     - library_licenses/tokio-util-LICENSE
+    - library_licenses/tower-service-LICENSE
+    - library_licenses/tracing-core-LICENSE
+    - library_licenses/tracing-futures-LICENSE
+    - library_licenses/tracing-LICENSE
+    - library_licenses/try-lock-LICENSE
     - library_licenses/typenum-LICENSE
+    - library_licenses/unicase-LICENSE-APACHE
+    - library_licenses/unicase-LICENSE-MIT
     - library_licenses/unicode-bidi-LICENSE-APACHE
     - library_licenses/unicode-bidi-LICENSE-MIT
     - library_licenses/unicode-normalization-LICENSE-APACHE
@@ -228,11 +274,14 @@ about:
     - library_licenses/unicode-xid-LICENSE-MIT
     - library_licenses/url-LICENSE-APACHE
     - library_licenses/url-LICENSE-MIT
+    - library_licenses/urlencoding-LICENSE
     - library_licenses/uuid-LICENSE-APACHE
     - library_licenses/uuid-LICENSE-MIT
     - library_licenses/version_check-LICENSE-APACHE
     - library_licenses/version_check-LICENSE-MIT
     - library_licenses/walkdir-LICENSE-MIT
+    - library_licenses/want-LICENSE
+    - library_licenses/warp-LICENSE
     - library_licenses/wasi-LICENSE-APACHE
     - library_licenses/wasi-LICENSE-MIT
     - library_licenses/winapi-build-LICENSE-APACHE
@@ -245,12 +294,12 @@ about:
     - library_licenses/winapi-util-LICENSE-MIT
     - library_licenses/winapi-x86_64-pc-windows-gnu-LICENSE-APACHE
     - library_licenses/winapi-x86_64-pc-windows-gnu-LICENSE-MIT
+    - library_licenses/winreg-LICENSE
     - library_licenses/ws2_32-sys-LICENSE-APACHE
     - library_licenses/ws2_32-sys-LICENSE-MIT
     - library_licenses/xml-rs-LICENSE
     - library_licenses/yaml-rust-LICENSE-MIT
-    # manually found
-    - library_licenses/urlencoding-LICENSE
+    - library_licenses/zip-LICENSE
     # END license_file
   summary: |
     geckodriver is a proxy for using W3C WebDriver-compatible clients to

@@ -17,7 +17,14 @@ import ruamel_yaml
 import pytest
 
 # first-party crates my be covered by packaged LICENSE-* file
-IGNORE = {}
+IGNORE = {
+    "marionette",
+    "mozdevice",
+    "mozprofile",
+    "mozrunner",
+    "mozversion",
+    "webdriver",
+}
 
 # convenience for local testing
 DEPENDENCIES_JSON = os.environ.get("DEPENDENCIES_JSON")
