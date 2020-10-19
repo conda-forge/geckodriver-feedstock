@@ -5,11 +5,15 @@ Home: https://github.com/mozilla/geckodriver
 
 Package license: MPL-2.0
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/geckodriver-feedstock/blob/master/LICENSE.txt)
 
 Summary: geckodriver is a proxy for using W3C WebDriver-compatible clients to
 interact with Gecko-based browsers.
 
+
+Development: https://searchfox.org/mozilla-central/source/testing/geckodriver
+
+Documentation: https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver
 
 This program provides the HTTP API described by the WebDriver protocol to
 communicate with Gecko browsers, such as Firefox. It translates calls into
@@ -156,7 +160,4 @@ Feedstock Maintainers
 =====================
 
 * [@bollwyvl](https://github.com/bollwyvl/)
-
-
-<!-- dummy commit to enable rerendering -->
 
