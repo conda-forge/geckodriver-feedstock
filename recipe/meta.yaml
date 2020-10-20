@@ -16,7 +16,7 @@ source:
   sha256: 4809d4a181e33796488d8481120427c717e54e3deedccb253a3bdbf2dc931c76
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
 
 requirements:
@@ -136,6 +136,8 @@ about:
     - library_licenses/http-LICENSE-MIT
     - library_licenses/httparse-LICENSE-APACHE
     - library_licenses/httparse-LICENSE-MIT
+    - library_licenses/httpdate-LICENSE-APACHE
+    - library_licenses/httpdate-LICENSE-MIT
     - library_licenses/hyper-LICENSE
     - library_licenses/idna-LICENSE-APACHE
     - library_licenses/idna-LICENSE-MIT
