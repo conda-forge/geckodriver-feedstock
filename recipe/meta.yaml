@@ -178,6 +178,8 @@ about:
     - library_licenses/num-integer-LICENSE-MIT
     - library_licenses/num-traits-LICENSE-APACHE
     - library_licenses/num-traits-LICENSE-MIT
+    - library_licenses/once_cell-LICENSE-APACHE
+    - library_licenses/once_cell-LICENSE-MIT
     - library_licenses/opaque-debug-LICENSE-APACHE
     - library_licenses/opaque-debug-LICENSE-MIT
     - library_licenses/percent-encoding-LICENSE-APACHE
