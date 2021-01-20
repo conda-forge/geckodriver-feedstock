@@ -1,13 +1,13 @@
 {% set name = "geckodriver" %}
-{% set version = "0.28.0" %}
+{% set version = "0.29.0" %}
 
 # sourced from:
-# https://firefox-source-docs.mozilla.org/_sources/testing/geckodriver/Support.md.txt
+# https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
 {% set min_firefox = "60" %}
 
 # sourced from:
 # https://github.com/mozilla/geckodriver/releases
-{% set changeset = "c00d2b6acd3f" %}
+{% set changeset = "cf6956a5ec8e" %}
 
 package:
   name: {{ name }}
@@ -17,7 +17,7 @@ source:
   fn: {{ name }}-{{ version }}-{{ changeset }}.zip
   # all of /testing because of other unpublished crates
   url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-  sha256: 277a928345b4bd64b35ed6944866b75306aafbdac99c8982224f6e597c53a1e5
+  sha256: ff555da6d0f05e34ff61ba59f6e39faac5ca4ea517088a83b6c3ee7f9728e547
 
 build:
   number: 0
@@ -109,6 +109,8 @@ about:
     - library_licenses/flate2-LICENSE-MIT
     - library_licenses/fnv-LICENSE-APACHE
     - library_licenses/fnv-LICENSE-MIT
+    - library_licenses/form_urlencoded-LICENSE-APACHE
+    - library_licenses/form_urlencoded-LICENSE-MIT
     - library_licenses/fuchsia-zircon-LICENSE
     - library_licenses/fuchsia-zircon-sys-COPYING
     - library_licenses/fuchsia-zircon-sys-LICENSE
@@ -259,6 +261,9 @@ about:
     - library_licenses/thread_local-LICENSE-MIT
     - library_licenses/time-LICENSE-APACHE
     - library_licenses/time-LICENSE-MIT
+    - library_licenses/tinyvec_macros-LICENSE-APACHE
+    - library_licenses/tinyvec_macros-LICENSE-MIT
+    - library_licenses/tinyvec_macros-LICENSE-ZLIB
     - library_licenses/tinyvec-LICENSE-ZLIB.md
     - library_licenses/tokio-LICENSE
     - library_licenses/tokio-util-LICENSE
