@@ -1,7 +1,7 @@
 :: NOTE: mostly derived from
 :: https://github.com/conda-forge/py-spy-feedstock/blob/master/recipe/bld.bat
 
-cd testing/geckodriver
+cd testing\geckodriver
 
 :: build
 cargo install --locked --root "%PREFIX%" --path . || goto :error
