@@ -1,22 +1,14 @@
-@ECHO ON
-rustc -V
-cargo -V
+:: NOTE: mostly derived from
+:: https://github.com/conda-forge/py-spy-feedstock/blob/master/recipe/bld.bat
 
-:: Install cargo-license
-set CARGO_HOME=%BUILD_PREFIX%\cargo
-mkdir %CARGO_HOME%
-icacls %CARGO_HOME% /grant Users:F
+:: build
+cargo install --locked --root "%PREFIX%" --path . || goto :error
 
-cd testing\geckodriver
-
-cargo build --release --verbose                   || goto :error
-cargo install --root "%PREFIX%" --path .          || goto :error
-
-if not exist "%SCRIPTS%" md "%SCRIPTS%"           || goto :error
-move "%PREFIX%\bin\geckodriver.exe" "%SCRIPTS%"   || goto :error
+:: remove extra build file
 del /F /Q "%PREFIX%\.crates.toml"
+
 goto :EOF
 
 :error
 echo Failed with error #%errorlevel%.
-exit 1
+exit /b %errorlevel%

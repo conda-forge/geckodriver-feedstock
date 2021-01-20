@@ -1,28 +1,26 @@
 #!/usr/bin/env bash
-set -ex
-rustc -V
-cargo -V
+# NOTE: mostly derived from
+# https://github.com/conda-forge/py-spy-feedstock/blob/master/recipe/build.sh
 
-export CARGO_HOME="$BUILD_PREFIX/cargo"
-mkdir $CARGO_HOME
+set -o xtrace -o nounset -o pipefail -o errexit
+
+export RUST_BACKTRACE=1
+export CARGO_LICENSES_FILE=$SRC_DIR/$PKG_NAME-$PKG_VERSION-cargo-dependencies.json
 
 if [ $(uname) = Darwin ] ; then
   export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
 else
-  export RUSTFLAGS="-C link-args=-Wl,-rpath-link,${PREFIX}/lib"
+  export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
 fi
 
-# Install cargo-license
-cargo install cargo-license
-
-# this is a little awkward, but saves the lengthy build
-pushd $RECIPE_DIR
-pytest -svv test_licenses.py
-popd
-
 cd testing/geckodriver
+# build statically linked binary with Rust
+cargo install --locked --root "$PREFIX" --path .
 
-cargo build --release --verbose
-cargo install --root "${PREFIX}" --path .
+# install cargo-license and dump licenses
+cargo install cargo-license
+cargo-license --json > $CARGO_LICENSES_FILE
+ls -lathr $CARGO_LICENSES_FILE
 
+# remove extra build file
 rm -f "${PREFIX}/.crates.toml"
