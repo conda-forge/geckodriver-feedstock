@@ -53,7 +53,7 @@ test:
     # TODO: may be needed
     # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
     - pytest test_selenium.py
-    - pytest test_licenses.py
+    - python test_licenses.py --ignore marionette,mozdevice,mozprofile,mozrunner,mozversion,webdriver
 
 about:
   home: https://github.com/mozilla/geckodriver
@@ -292,10 +292,3 @@ about:
 extra:
   recipe-maintainers:
     - bollwyvl
-  cargo-license-ignore-crates:
-    - marionette
-    - mozdevice
-    - mozprofile
-    - mozrunner
-    - mozversion
-    - webdriver
