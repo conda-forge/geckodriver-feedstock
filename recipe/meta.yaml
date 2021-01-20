@@ -32,17 +32,16 @@ requirements:
 
 test:
   source_files:
-    - {{ name }}-{{ version }}-cargo-dependencies.json  # [unix]
+    - {{ name }}-{{ version }}-cargo-dependencies.json
   files:
     - test_selenium.py
-    - test_licenses.py  # [unix]
+    - test_licenses.py
   requires:
     - firefox >={{ min_firefox }}
     - python >=3.6
     - selenium
     - pytest
-    # for license checking
-    - ruamel_yaml  # [unix]
+    - ruamel_yaml
   commands:
     - geckodriver --version
     - geckodriver --help
@@ -54,12 +53,17 @@ test:
     # TODO: may be needed
     # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
     - pytest test_selenium.py
-    - pytest test_licenses.py  # [unix]
+    - pytest test_licenses.py
 
 about:
   home: https://github.com/mozilla/geckodriver
   license: MPL-2.0
   license_file:
+    - library_licenses/dirs-LICENSE-APACHE  # [osx]
+    - library_licenses/dirs-LICENSE-MIT  # [osx]
+    - library_licenses/dirs-sys-LICENSE-APACHE  # [osx]
+    - library_licenses/dirs-sys-LICENSE-MIT  # [osx]
+    # on all platforms
     - library_licenses/adler-LICENSE-APACHE
     - library_licenses/adler-LICENSE-MIT
     - library_licenses/aho-corasick-LICENSE

@@ -22,6 +22,7 @@ SRC_DIR = Path(os.environ["SRC_DIR"])
 # semi-surpisingly, this is the post-rendered recipe
 META = ruamel_yaml.safe_load((RECIPE_DIR / "meta.yaml").read_text("utf-8"))
 META_LICENSE_FILES = META["about"]["license_file"]
+
 # first-party crates are covered by packaged LICENSE-* file
 META_IGNORE_DEPS = META["extra"]["cargo-license-ignore-crates"]
 
