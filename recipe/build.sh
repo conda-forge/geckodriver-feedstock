@@ -22,5 +22,6 @@ cargo install cargo-license
 cargo-license --json > $CARGO_LICENSES_FILE
 ls -lathr $CARGO_LICENSES_FILE
 
-# remove extra build file
+# remove extra build files
 rm -f "${PREFIX}/.crates2.json"
+rm -f "${PREFIX}/.crates.toml"
