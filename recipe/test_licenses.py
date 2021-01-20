@@ -80,7 +80,9 @@ def test_missing_license(crate):
         if match.name not in META_LICENSE_NAMES:
             errors += ["not in meta.yaml"]
 
-    assert not errors, ruamel_yaml.safe_dump(DEPENDENCIES[crate])
+    assert not errors, ruamel_yaml.safe_dump(
+        DEPENDENCIES[crate], default_flow_style=False
+    )
 
 
 @pytest.mark.parametrize("license_in_yaml", META_LICENSE_NAMES)
