@@ -13,7 +13,8 @@ move %PREFIX%\bin\geckodriver.exe %SCRIPTS%
 :: install cargo-license and dump licenses
 set CARGO_LICENSES_FILE=%SRC_DIR%\%PKG_NAME%-%PKG_VERSION%-cargo-dependencies.json
 cargo install cargo-license
-cargo-license --json > %CARGO_LICENSES_FILE%
+set CARGO_LICENSE_BIN=%BUILD_PREFIX%\.cargo\bin\cargo-license
+%CARGO_LICENSE_BIN% --json > %CARGO_LICENSES_FILE%
 dir %CARGO_LICENSES_FILE%
 
 :: remove extra build files
