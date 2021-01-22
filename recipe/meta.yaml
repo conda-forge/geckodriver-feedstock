@@ -73,6 +73,8 @@ about:
     - library_licenses/constant_time_eq-LICENSE.txt  # [win]
     - library_licenses/crossbeam-utils-LICENSE-APACHE  # [win]
     - library_licenses/crossbeam-utils-LICENSE-MIT  # [win]
+    - library_licenses/dirs-LICENSE-APACHE  # [win]
+    - library_licenses/dirs-LICENSE-MIT  # [win]
     - library_licenses/dirs-sys-LICENSE-APACHE  # [win]
     - library_licenses/dirs-sys-LICENSE-MIT  # [win]
     - library_licenses/fuchsia-zircon-LICENSE  # [win]
