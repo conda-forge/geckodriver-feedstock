@@ -5,11 +5,7 @@
 """
 import sys
 import os
-import subprocess
-import traceback
-import json
 import re
-
 
 from pathlib import Path
 
@@ -27,6 +23,7 @@ if os.environ["PKG_NAME"] == "firefox":
         f"""{re.escape(os.environ["PKG_VERSION"])}"""
         r"""\s*</td>"""
     )
+
 
 @pytest.fixture
 def binary_paths():
@@ -75,16 +72,18 @@ def driver(tmp_path, binary_paths):
     )
 
 
-@pytest.mark.parametrize("thing,url,expected_re", [
-    ["license", "about:license", LICENSE_CANARY],
-    ["support", "about:support", SUPPORT_CANARY],
-])
+@pytest.mark.parametrize(
+    "thing,url,expected_re",
+    [
+        ["license", "about:license", LICENSE_CANARY],
+        ["support", "about:support", SUPPORT_CANARY],
+    ],
+)
 def test_page(thing, url, expected_re, tmp_path, driver):
     html = tmp_path / f"{thing}.html"
     png = tmp_path / f"{thing}.png"
 
     print(f"checking {url} for `{expected_re}`...")
-    errors = []
     driver.get(url)
     source = driver.page_source
 
