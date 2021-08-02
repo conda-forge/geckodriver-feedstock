@@ -66,13 +66,6 @@ about:
     - library_licenses/dirs-sys-LICENSE-MIT  # [osx]
 
     # windows
-    - library_licenses/arrayref-LICENSE  # [win]
-    - library_licenses/arrayvec-LICENSE-APACHE  # [win]
-    - library_licenses/arrayvec-LICENSE-MIT  # [win]
-    - library_licenses/blake2b_simd-LICENSE  # [win]
-    - library_licenses/constant_time_eq-LICENSE.txt  # [win]
-    - library_licenses/crossbeam-utils-LICENSE-APACHE  # [win]
-    - library_licenses/crossbeam-utils-LICENSE-MIT  # [win]
     - library_licenses/dirs-LICENSE-APACHE  # [win]
     - library_licenses/dirs-LICENSE-MIT  # [win]
     - library_licenses/dirs-sys-LICENSE-APACHE  # [win]
@@ -87,8 +80,6 @@ about:
     - library_licenses/rand_hc-LICENSE-MIT  # [win]
     - library_licenses/redox_syscall-LICENSE  # [win]
     - library_licenses/redox_users-LICENSE  # [win]
-    - library_licenses/rust-argon2-LICENSE-APACHE  # [win]
-    - library_licenses/rust-argon2-LICENSE-MIT  # [win]
     - library_licenses/wasi-LICENSE-APACHE  # [win]
     - library_licenses/wasi-LICENSE-MIT  # [win]
     - library_licenses/winapi-LICENSE-APACHE  # [win]
