@@ -119,10 +119,6 @@ about:
     - library_licenses/bitflags-LICENSE-MIT
     - library_licenses/block-buffer-LICENSE-APACHE
     - library_licenses/block-buffer-LICENSE-MIT
-    - library_licenses/block-padding-LICENSE-APACHE
-    - library_licenses/block-padding-LICENSE-MIT
-    - library_licenses/byte-tools-LICENSE-APACHE
-    - library_licenses/byte-tools-LICENSE-MIT
     - library_licenses/byteorder-LICENSE-MIT
     - library_licenses/bytes-LICENSE
     - library_licenses/cfg-if-LICENSE-APACHE
@@ -132,14 +128,14 @@ about:
     - library_licenses/clap-LICENSE-MIT
     - library_licenses/cookie-LICENSE-APACHE
     - library_licenses/cookie-LICENSE-MIT
+    - library_licenses/cpufeatures-LICENSE-APACHE
+    - library_licenses/cpufeatures-LICENSE-MIT
     - library_licenses/crc32fast-LICENSE-APACHE
     - library_licenses/crc32fast-LICENSE-MIT
     - library_licenses/digest-LICENSE-APACHE
     - library_licenses/digest-LICENSE-MIT
     - library_licenses/dtoa-LICENSE-APACHE
     - library_licenses/dtoa-LICENSE-MIT
-    - library_licenses/fake-simd-LICENSE-APACHE
-    - library_licenses/fake-simd-LICENSE-MIT
     - library_licenses/flate2-LICENSE-MIT
     - library_licenses/fnv-LICENSE-APACHE
     - library_licenses/fnv-LICENSE-MIT
@@ -279,8 +275,6 @@ about:
     - library_licenses/term_size-LICENSE-APACHE
     - library_licenses/term_size-LICENSE-MIT
     - library_licenses/textwrap-LICENSE
-    - library_licenses/thread_local-LICENSE-APACHE
-    - library_licenses/thread_local-LICENSE-MIT
     - library_licenses/time-LICENSE-APACHE
     - library_licenses/time-LICENSE-MIT
     - library_licenses/tinyvec_macros-LICENSE-APACHE
