@@ -1,5 +1,5 @@
 {% set name = "geckodriver" %}
-{% set version = "0.29.0" %}
+{% set version = "0.29.1" %}
 
 # sourced from:
 # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
@@ -7,7 +7,7 @@
 
 # sourced from:
 # https://github.com/mozilla/geckodriver/releases
-{% set changeset = "cf6956a5ec8e" %}
+{% set changeset = "970ef713fe58" %}
 
 package:
   name: {{ name }}
@@ -17,7 +17,7 @@ source:
   fn: {{ name }}-{{ version }}-{{ changeset }}.zip
   # all of /testing because of other unpublished crates
   url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-  sha256: ff555da6d0f05e34ff61ba59f6e39faac5ca4ea517088a83b6c3ee7f9728e547
+  sha256: badb33f
 
 build:
   number: 0
