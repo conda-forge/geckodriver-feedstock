@@ -17,7 +17,7 @@ source:
   fn: {{ name }}-{{ version }}-{{ changeset }}.zip
   # all of /testing because of other unpublished crates
   url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-  sha256: badb33f
+  sha256: 4541343fdcdd29f142c02ce31ef560c2721da82f4fb2fb4889277f7e91d6f114
 
 build:
   number: 0
