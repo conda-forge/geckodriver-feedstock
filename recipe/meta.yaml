@@ -1,5 +1,5 @@
 {% set name = "geckodriver" %}
-{% set version = "0.29.0" %}
+{% set version = "0.29.1" %}
 
 # sourced from:
 # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
@@ -7,7 +7,7 @@
 
 # sourced from:
 # https://github.com/mozilla/geckodriver/releases
-{% set changeset = "cf6956a5ec8e" %}
+{% set changeset = "970ef713fe58" %}
 
 package:
   name: {{ name }}
@@ -17,7 +17,7 @@ source:
   fn: {{ name }}-{{ version }}-{{ changeset }}.zip
   # all of /testing because of other unpublished crates
   url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-  sha256: ff555da6d0f05e34ff61ba59f6e39faac5ca4ea517088a83b6c3ee7f9728e547
+  sha256: 4541343fdcdd29f142c02ce31ef560c2721da82f4fb2fb4889277f7e91d6f114
 
 build:
   number: 0
@@ -66,13 +66,6 @@ about:
     - library_licenses/dirs-sys-LICENSE-MIT  # [osx]
 
     # windows
-    - library_licenses/arrayref-LICENSE  # [win]
-    - library_licenses/arrayvec-LICENSE-APACHE  # [win]
-    - library_licenses/arrayvec-LICENSE-MIT  # [win]
-    - library_licenses/blake2b_simd-LICENSE  # [win]
-    - library_licenses/constant_time_eq-LICENSE.txt  # [win]
-    - library_licenses/crossbeam-utils-LICENSE-APACHE  # [win]
-    - library_licenses/crossbeam-utils-LICENSE-MIT  # [win]
     - library_licenses/dirs-LICENSE-APACHE  # [win]
     - library_licenses/dirs-LICENSE-MIT  # [win]
     - library_licenses/dirs-sys-LICENSE-APACHE  # [win]
@@ -87,8 +80,6 @@ about:
     - library_licenses/rand_hc-LICENSE-MIT  # [win]
     - library_licenses/redox_syscall-LICENSE  # [win]
     - library_licenses/redox_users-LICENSE  # [win]
-    - library_licenses/rust-argon2-LICENSE-APACHE  # [win]
-    - library_licenses/rust-argon2-LICENSE-MIT  # [win]
     - library_licenses/wasi-LICENSE-APACHE  # [win]
     - library_licenses/wasi-LICENSE-MIT  # [win]
     - library_licenses/winapi-LICENSE-APACHE  # [win]
@@ -119,10 +110,6 @@ about:
     - library_licenses/bitflags-LICENSE-MIT
     - library_licenses/block-buffer-LICENSE-APACHE
     - library_licenses/block-buffer-LICENSE-MIT
-    - library_licenses/block-padding-LICENSE-APACHE
-    - library_licenses/block-padding-LICENSE-MIT
-    - library_licenses/byte-tools-LICENSE-APACHE
-    - library_licenses/byte-tools-LICENSE-MIT
     - library_licenses/byteorder-LICENSE-MIT
     - library_licenses/bytes-LICENSE
     - library_licenses/cfg-if-LICENSE-APACHE
@@ -132,14 +119,14 @@ about:
     - library_licenses/clap-LICENSE-MIT
     - library_licenses/cookie-LICENSE-APACHE
     - library_licenses/cookie-LICENSE-MIT
+    - library_licenses/cpufeatures-LICENSE-APACHE
+    - library_licenses/cpufeatures-LICENSE-MIT
     - library_licenses/crc32fast-LICENSE-APACHE
     - library_licenses/crc32fast-LICENSE-MIT
     - library_licenses/digest-LICENSE-APACHE
     - library_licenses/digest-LICENSE-MIT
     - library_licenses/dtoa-LICENSE-APACHE
     - library_licenses/dtoa-LICENSE-MIT
-    - library_licenses/fake-simd-LICENSE-APACHE
-    - library_licenses/fake-simd-LICENSE-MIT
     - library_licenses/flate2-LICENSE-MIT
     - library_licenses/fnv-LICENSE-APACHE
     - library_licenses/fnv-LICENSE-MIT
@@ -279,8 +266,6 @@ about:
     - library_licenses/term_size-LICENSE-APACHE
     - library_licenses/term_size-LICENSE-MIT
     - library_licenses/textwrap-LICENSE
-    - library_licenses/thread_local-LICENSE-APACHE
-    - library_licenses/thread_local-LICENSE-MIT
     - library_licenses/time-LICENSE-APACHE
     - library_licenses/time-LICENSE-MIT
     - library_licenses/tinyvec_macros-LICENSE-APACHE
