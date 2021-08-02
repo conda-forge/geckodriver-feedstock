@@ -15,7 +15,6 @@ from selenium.webdriver.firefox.options import Options
 import pytest
 
 LICENSE_CANARY = re.escape("Mozilla Public License 2.0")
-SUPPORT_CANARY = r"""<td id="application-box">\s*?Firefox\s*?</td>"""
 
 if os.environ["PKG_NAME"] == "firefox":
     SUPPORT_CANARY = (
@@ -76,7 +75,6 @@ def driver(tmp_path, binary_paths):
     "thing,url,expected_re",
     [
         ["license", "about:license", LICENSE_CANARY],
-        ["support", "about:support", SUPPORT_CANARY],
     ],
 )
 def test_page(thing, url, expected_re, tmp_path, driver):
@@ -86,6 +84,8 @@ def test_page(thing, url, expected_re, tmp_path, driver):
     print(f"checking {url} for `{expected_re}`...")
     driver.get(url)
     source = driver.page_source
+
+    print(source)
 
     assert re.findall(expected_re, source)
 
