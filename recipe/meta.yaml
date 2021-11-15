@@ -292,6 +292,10 @@ about:
     - library_licenses/unicode-width-LICENSE-MIT
     - library_licenses/unicode-xid-LICENSE-APACHE
     - library_licenses/unicode-xid-LICENSE-MIT
+    - library_licenses/unix_path-LICENSE-APACHE
+    - library_licenses/unix_path-LICENSE-MIT
+    - library_licenses/unix_str-LICENSE-APACHE
+    - library_licenses/unix_str-LICENSE-MIT
     - library_licenses/url-LICENSE-APACHE
     - library_licenses/url-LICENSE-MIT
     - library_licenses/urlencoding-LICENSE
