@@ -24,18 +24,18 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('rust') }}
-    - sysroot_linux-64 2.17  # [linux64]
     - cargo-bundle-licenses
+    - sysroot_linux-64 2.17  # [linux64]
 
 test:
   files:
     - test_selenium.py
   requires:
     - firefox >={{ min_firefox }}
-    - python >=3.6
-    - selenium
     - pytest
+    - python >=3.6
     - ruamel_yaml
+    - selenium >=4
   commands:
     - geckodriver --version
     - geckodriver --help
