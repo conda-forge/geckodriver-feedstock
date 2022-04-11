@@ -42,8 +42,8 @@ test:
     # this important just so we know that the version is accurate
     # https://github.com/mozilla/geckodriver/issues/1615
     - geckodriver --version | grep {{ version }}  # [not win]
-    - conda inspect linkages -p $PREFIX {{ name }}  # [not win]
-    - conda inspect objects -p $PREFIX {{ name }}  # [osx]
+    - conda inspect linkages -p $PREFIX geckodriver  # [not win]
+    - conda inspect objects -p $PREFIX geckodriver  # [osx]
     # TODO: may be needed
     # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
     - pytest test_selenium.py
