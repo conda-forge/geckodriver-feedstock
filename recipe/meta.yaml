@@ -10,10 +10,10 @@ package:
 
 source:
   - url: https://github.com/mozilla/geckodriver/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: d3
+    sha256: 9648bfc1930eaeb648c438edc100eea3c03dc02b03fa90f4e439dd9dd20dcfbd
   - fn: geckodriver-{{ version }}-mpl-2.0.html
     url: https://www.mozilla.org/en-US/MPL/2.0/
-    sha256sum: 1f5415d11845a92745d8ce1d8ef18725b56d0f58e8adafce14a1da95f3d4e0d3
+    sha256: 1f5415d11845a92745d8ce1d8ef18725b56d0f58e8adafce14a1da95f3d4e0d3
 
 build:
   number: 0
