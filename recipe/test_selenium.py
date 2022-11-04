@@ -1,20 +1,26 @@
 """ test whether firefox is viable with geckodriver and selenium
 
-    Adapted from (and should be kept in sync with)
-    https://github.com/conda-forge/firefox-feedstock/blob/master/recipe/test_selenium.py
+    Adapted from
+    https://github.com/conda-forge/firefox-feedstock/blob/master/recipe/run_test.py
 """
 import sys
 import os
+import subprocess
+import traceback
+import json
 import re
-
+import time
 from pathlib import Path
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 import pytest
 
 LICENSE_CANARY = re.escape("Mozilla Public License 2.0")
+SUPPORT_CANARY = r"""<td id="application-box">\s*?Firefox\s*?</td>"""
 
 if os.environ["PKG_NAME"] == "firefox":
     SUPPORT_CANARY = (
@@ -42,26 +48,28 @@ def binary_paths():
     assert firefox.exists()
     assert geckodriver.exists()
 
-    return dict(
-        firefox_binary=str(firefox),
-        executable_path=str(geckodriver),
-    )
+    return firefox, geckodriver
 
 
 @pytest.fixture
 def driver(tmp_path, binary_paths):
+    firefox, geckodriver = binary_paths
     log = tmp_path / "geckodriver.log"
 
     options = Options()
     options.headless = True
-    driver = webdriver.Firefox(
-        options=options,
-        service_log_path=str(log),
+    options.binary = FirefoxBinary(str(firefox))
+
+    service = Service(
+        executable_path=str(geckodriver),
         service_args=["--log", "trace"],
-        **binary_paths,
+        log_path=str(log),
     )
 
+    driver = webdriver.Firefox(options=options, service=service)
+
     yield driver
+
     driver.quit()
 
     print(
@@ -75,6 +83,7 @@ def driver(tmp_path, binary_paths):
     "thing,url,expected_re",
     [
         ["license", "about:license", LICENSE_CANARY],
+        ["support", "about:support", SUPPORT_CANARY],
     ],
 )
 def test_page(thing, url, expected_re, tmp_path, driver):
@@ -82,14 +91,19 @@ def test_page(thing, url, expected_re, tmp_path, driver):
     png = tmp_path / f"{thing}.png"
 
     print(f"checking {url} for `{expected_re}`...")
+    errors = []
     driver.get(url)
-    source = driver.page_source
 
-    print(source)
+    for i in range(3):
+        source = driver.page_source
+        matches = [*re.findall(expected_re, source)]
+        if matches:
+            break
+        time.sleep(3)
 
-    assert re.findall(expected_re, source)
+    assert matches, f"couldn't find {expected_re} in {url}, {source}"
 
-    html.write_text(driver.page_source)
+    html.write_text(source)
 
     driver.save_screenshot(str(png))
 
