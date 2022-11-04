@@ -1,23 +1,26 @@
 {% set name = "geckodriver" %}
-{% set version = "0.30.0" %}
+{% set version = "0.32.0" %}
 
 # sourced from:
 # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-{% set min_firefox = "60" %}
+{% set min_firefox = "102" %}
 
 # sourced from:
 # https://github.com/mozilla/geckodriver/releases
-{% set changeset = "d372710b98a6" %}
+{% set changeset = "4563dd583110" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}-{{ changeset }}.zip
-  # all of /testing because of other unpublished crates
-  url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-  sha256: 75ba1a74dd87b77916280c2c2e808a52e643094f15b7a60421439516e1304e47
+  - fn: {{ name }}-{{ version }}-{{ changeset }}-LICENSE.zip
+    url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/toolkit/content/license.html
+    sha256: 090820705c9ebd57e92d7a45898622b3c694b3975281f051f126b63c852afdcd
+  - fn: {{ name }}-{{ version }}-{{ changeset }}.zip
+    # all of /testing because of other unpublished crates
+    url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
+    sha256: 82e2da17e80ebd4537dd7f6cf54ccb476c7b1fd020c33e360078c55ee8cc718e
 
 build:
   number: 0
@@ -29,19 +32,18 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('rust') }}
     - sysroot_linux-64 2.17  # [linux64]
+    - cargo-bundle-licenses
 
 test:
   source_files:
     - {{ name }}-{{ version }}-cargo-dependencies.json
   files:
     - test_selenium.py
-    - test_licenses.py
   requires:
     - firefox >={{ min_firefox }}
     - python >=3.6
     - selenium
     - pytest
-    - ruamel_yaml
   commands:
     - geckodriver --version
     - geckodriver --help
@@ -53,262 +55,13 @@ test:
     # TODO: may be needed
     # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
     - pytest test_selenium.py
-    - python test_licenses.py --ignore marionette,mozdevice,mozprofile,mozrunner,mozversion,webdriver
 
 about:
   home: https://github.com/mozilla/geckodriver
   license: MPL-2.0
   license_file:
-    # osx
-    - library_licenses/dirs-LICENSE-APACHE  # [osx]
-    - library_licenses/dirs-LICENSE-MIT  # [osx]
-    - library_licenses/dirs-sys-LICENSE-APACHE  # [osx]
-    - library_licenses/dirs-sys-LICENSE-MIT  # [osx]
-
-    # windows
-    - library_licenses/dirs-LICENSE-APACHE  # [win]
-    - library_licenses/dirs-LICENSE-MIT  # [win]
-    - library_licenses/dirs-sys-LICENSE-APACHE  # [win]
-    - library_licenses/dirs-sys-LICENSE-MIT  # [win]
-    - library_licenses/fuchsia-zircon-LICENSE  # [win]
-    - library_licenses/fuchsia-zircon-sys-COPYING  # [win]
-    - library_licenses/fuchsia-zircon-sys-LICENSE  # [win]
-    - library_licenses/kernel32-sys-LICENSE-MIT  # [win]
-    - library_licenses/miow-LICENSE-APACHE  # [win]
-    - library_licenses/miow-LICENSE-MIT  # [win]
-    - library_licenses/rand_hc-LICENSE-APACHE  # [win]
-    - library_licenses/rand_hc-LICENSE-MIT  # [win]
-    - library_licenses/redox_syscall-LICENSE  # [win]
-    - library_licenses/redox_users-LICENSE  # [win]
-    - library_licenses/wasi-LICENSE-APACHE  # [win]
-    - library_licenses/wasi-LICENSE-MIT  # [win]
-    - library_licenses/winapi-LICENSE-APACHE  # [win]
-    - library_licenses/winapi-LICENSE-MIT  # [win]
-    - library_licenses/winapi-LICENSE.md  # [win]
-    - library_licenses/winapi-build-LICENSE-APACHE  # [win]
-    - library_licenses/winapi-build-LICENSE-MIT  # [win]
-    - library_licenses/winapi-i686-pc-windows-gnu-LICENSE-APACHE  # [win]
-    - library_licenses/winapi-i686-pc-windows-gnu-LICENSE-MIT  # [win]
-    - library_licenses/winapi-util-LICENSE-MIT  # [win]
-    - library_licenses/winapi-x86_64-pc-windows-gnu-LICENSE-APACHE  # [win]
-    - library_licenses/winapi-x86_64-pc-windows-gnu-LICENSE-MIT  # [win]
-    - library_licenses/winreg-LICENSE  # [win]
-    - library_licenses/ws2_32-sys-LICENSE-APACHE  # [win]
-    - library_licenses/ws2_32-sys-LICENSE-MIT  # [win]
-
-    # on all platforms
-    - library_licenses/adler-LICENSE-APACHE
-    - library_licenses/adler-LICENSE-MIT
-    - library_licenses/aho-corasick-LICENSE
-    - library_licenses/aho-corasick-LICENSE-MIT
-    - library_licenses/ansi_term-LICENCE
-    - library_licenses/autocfg-LICENSE-APACHE
-    - library_licenses/autocfg-LICENSE-MIT
-    - library_licenses/base64-LICENSE-APACHE
-    - library_licenses/base64-LICENSE-MIT
-    - library_licenses/bitflags-LICENSE-APACHE
-    - library_licenses/bitflags-LICENSE-MIT
-    - library_licenses/block-buffer-LICENSE-APACHE
-    - library_licenses/block-buffer-LICENSE-MIT
-    - library_licenses/byteorder-LICENSE-MIT
-    - library_licenses/bytes-LICENSE
-    - library_licenses/cfg-if-LICENSE-APACHE
-    - library_licenses/cfg-if-LICENSE-MIT
-    - library_licenses/chrono-LICENSE
-    - library_licenses/clap-LICENSE-APACHE
-    - library_licenses/clap-LICENSE-MIT
-    - library_licenses/cookie-LICENSE-APACHE
-    - library_licenses/cookie-LICENSE-MIT
-    - library_licenses/cpufeatures-LICENSE-APACHE
-    - library_licenses/cpufeatures-LICENSE-MIT
-    - library_licenses/crc32fast-LICENSE-APACHE
-    - library_licenses/crc32fast-LICENSE-MIT
-    - library_licenses/digest-LICENSE-APACHE
-    - library_licenses/digest-LICENSE-MIT
-    - library_licenses/dtoa-LICENSE-APACHE
-    - library_licenses/dtoa-LICENSE-MIT
-    - library_licenses/flate2-LICENSE-MIT
-    - library_licenses/fnv-LICENSE-APACHE
-    - library_licenses/fnv-LICENSE-MIT
-    - library_licenses/form_urlencoded-LICENSE-APACHE
-    - library_licenses/form_urlencoded-LICENSE-MIT
-    - library_licenses/futures-channel-LICENSE-APACHE
-    - library_licenses/futures-channel-LICENSE-MIT
-    - library_licenses/futures-core-LICENSE-APACHE
-    - library_licenses/futures-core-LICENSE-MIT
-    - library_licenses/futures-io-LICENSE-APACHE
-    - library_licenses/futures-io-LICENSE-MIT
-    - library_licenses/futures-LICENSE-APACHE
-    - library_licenses/futures-LICENSE-MIT
-    - library_licenses/futures-sink-LICENSE-APACHE
-    - library_licenses/futures-sink-LICENSE-MIT
-    - library_licenses/futures-task-LICENSE-APACHE
-    - library_licenses/futures-task-LICENSE-MIT
-    - library_licenses/futures-util-LICENSE-APACHE
-    - library_licenses/futures-util-LICENSE-MIT
-    - library_licenses/geckodriver-LICENSE-MPL
-    - library_licenses/generic-array-LICENSE
-    - library_licenses/getrandom-LICENSE-APACHE
-    - library_licenses/getrandom-LICENSE-MIT
-    - library_licenses/h2-LICENSE
-    - library_licenses/hashbrown-LICENSE-APACHE
-    - library_licenses/hashbrown-LICENSE-MIT
-    - library_licenses/headers-core-LICENSE
-    - library_licenses/headers-LICENSE
-    - library_licenses/http-body-LICENSE
-    - library_licenses/http-LICENSE-APACHE
-    - library_licenses/http-LICENSE-MIT
-    - library_licenses/httparse-LICENSE-APACHE
-    - library_licenses/httparse-LICENSE-MIT
-    - library_licenses/httpdate-LICENSE-APACHE
-    - library_licenses/httpdate-LICENSE-MIT
-    - library_licenses/hyper-LICENSE
-    - library_licenses/idna-LICENSE-APACHE
-    - library_licenses/idna-LICENSE-MIT
-    - library_licenses/indexmap-LICENSE
-    - library_licenses/indexmap-LICENSE-APACHE
-    - library_licenses/indexmap-LICENSE-MIT
-    - library_licenses/iovec-LICENSE-APACHE
-    - library_licenses/iovec-LICENSE-MIT
-    - library_licenses/itoa-LICENSE-APACHE
-    - library_licenses/itoa-LICENSE-MIT
-    - library_licenses/lazy_static-LICENSE-APACHE
-    - library_licenses/lazy_static-LICENSE-MIT
-    - library_licenses/libc-LICENSE-APACHE
-    - library_licenses/libc-LICENSE-MIT
-    - library_licenses/line-wrap-LICENSE
-    - library_licenses/linked-hash-map-LICENSE-MIT
-    - library_licenses/log-LICENSE-APACHE
-    - library_licenses/log-LICENSE-MIT
-    - library_licenses/matches-LICENSE
-    - library_licenses/memchr-LICENSE-MIT
-    - library_licenses/mime_guess-LICENSE
-    - library_licenses/mime-LICENSE
-    - library_licenses/miniz_oxide-LICENSE
-    - library_licenses/mio-LICENSE
-    - library_licenses/msdos_time-LICENSE-APACHE
-    - library_licenses/msdos_time-LICENSE-MIT
-    - library_licenses/net2-LICENSE-APACHE
-    - library_licenses/net2-LICENSE-MIT
-    - library_licenses/num-integer-LICENSE
-    - library_licenses/num-integer-LICENSE-APACHE
-    - library_licenses/num-integer-LICENSE-MIT
-    - library_licenses/num-traits-LICENSE-APACHE
-    - library_licenses/num-traits-LICENSE-MIT
-    - library_licenses/once_cell-LICENSE-APACHE
-    - library_licenses/once_cell-LICENSE-MIT
-    - library_licenses/opaque-debug-LICENSE-APACHE
-    - library_licenses/opaque-debug-LICENSE-MIT
-    - library_licenses/percent-encoding-LICENSE-APACHE
-    - library_licenses/percent-encoding-LICENSE-MIT
-    - library_licenses/pin-project-internal-LICENSE-APACHE
-    - library_licenses/pin-project-internal-LICENSE-MIT
-    - library_licenses/pin-project-LICENSE-APACHE
-    - library_licenses/pin-project-LICENSE-MIT
-    - library_licenses/pin-project-lite-LICENSE-APACHE
-    - library_licenses/pin-project-lite-LICENSE-MIT
-    - library_licenses/pin-utils-LICENSE-APACHE
-    - library_licenses/pin-utils-LICENSE-MIT
-    - library_licenses/plist-LICENSE
-    - library_licenses/podio-LICENSE-APACHE
-    - library_licenses/podio-LICENSE-MIT
-    - library_licenses/ppv-lite86-LICENSE-APACHE
-    - library_licenses/ppv-lite86-LICENSE-MIT
-    - library_licenses/proc-macro2-LICENSE-APACHE
-    - library_licenses/proc-macro2-LICENSE-MIT
-    - library_licenses/quote-LICENSE-APACHE
-    - library_licenses/quote-LICENSE-MIT
-    - library_licenses/rand_chacha-LICENSE-APACHE
-    - library_licenses/rand_chacha-LICENSE-MIT
-    - library_licenses/rand_core-LICENSE-APACHE
-    - library_licenses/rand_core-LICENSE-MIT
-    - library_licenses/rand-LICENSE-APACHE
-    - library_licenses/rand-LICENSE-MIT
-    - library_licenses/regex-LICENSE-APACHE
-    - library_licenses/regex-LICENSE-MIT
-    - library_licenses/regex-syntax-LICENSE-APACHE
-    - library_licenses/regex-syntax-LICENSE-MIT
-    - library_licenses/remove_dir_all-LICENCE-APACHE
-    - library_licenses/remove_dir_all-LICENCE-MIT
-    - library_licenses/rust-ini-LICENSE
-    - library_licenses/ryu-LICENSE-APACHE
-    - library_licenses/ryu-LICENSE-BOOST
-    - library_licenses/safemem-LICENSE-MIT
-    - library_licenses/same-file-LICENSE-MIT
-    - library_licenses/scoped-tls-LICENSE-APACHE
-    - library_licenses/scoped-tls-LICENSE-MIT
-    - library_licenses/semver-LICENSE-APACHE
-    - library_licenses/semver-LICENSE-MIT
-    - library_licenses/semver-parser-LICENSE-APACHE
-    - library_licenses/semver-parser-LICENSE-MIT
-    - library_licenses/serde_derive-LICENSE-APACHE
-    - library_licenses/serde_derive-LICENSE-MIT
-    - library_licenses/serde_json-LICENSE-APACHE
-    - library_licenses/serde_json-LICENSE-MIT
-    - library_licenses/serde_repr-LICENSE-APACHE
-    - library_licenses/serde_repr-LICENSE-MIT
-    - library_licenses/serde_urlencoded-LICENSE-APACHE
-    - library_licenses/serde_urlencoded-LICENSE-MIT
-    - library_licenses/serde_yaml-LICENSE-APACHE
-    - library_licenses/serde_yaml-LICENSE-MIT
-    - library_licenses/serde-LICENSE-APACHE
-    - library_licenses/serde-LICENSE-MIT
-    - library_licenses/sha-1-LICENSE-APACHE
-    - library_licenses/sha-1-LICENSE-MIT
-    - library_licenses/slab-LICENSE
-    - library_licenses/socket2-LICENSE-APACHE
-    - library_licenses/socket2-LICENSE-MIT
-    - library_licenses/strsim-LICENSE
-    - library_licenses/syn-LICENSE-APACHE
-    - library_licenses/syn-LICENSE-MIT
-    - library_licenses/tempfile-LICENSE-APACHE
-    - library_licenses/tempfile-LICENSE-MIT
-    - library_licenses/term_size-LICENSE-APACHE
-    - library_licenses/term_size-LICENSE-MIT
-    - library_licenses/textwrap-LICENSE
-    - library_licenses/time-LICENSE-APACHE
-    - library_licenses/time-LICENSE-MIT
-    - library_licenses/tinyvec_macros-LICENSE-APACHE
-    - library_licenses/tinyvec_macros-LICENSE-MIT
-    - library_licenses/tinyvec_macros-LICENSE-ZLIB
-    - library_licenses/tinyvec-LICENSE-ZLIB.md
-    - library_licenses/tokio-LICENSE
-    - library_licenses/tokio-util-LICENSE
-    - library_licenses/tower-service-LICENSE
-    - library_licenses/tracing-core-LICENSE
-    - library_licenses/tracing-futures-LICENSE
-    - library_licenses/tracing-LICENSE
-    - library_licenses/try-lock-LICENSE
-    - library_licenses/typenum-LICENSE
-    - library_licenses/unicase-LICENSE-APACHE
-    - library_licenses/unicase-LICENSE-MIT
-    - library_licenses/unicode-bidi-LICENSE-APACHE
-    - library_licenses/unicode-bidi-LICENSE-MIT
-    - library_licenses/unicode-normalization-LICENSE-APACHE
-    - library_licenses/unicode-normalization-LICENSE-MIT
-    - library_licenses/unicode-segmentation-LICENSE-APACHE
-    - library_licenses/unicode-segmentation-LICENSE-MIT
-    - library_licenses/unicode-width-LICENSE-APACHE
-    - library_licenses/unicode-width-LICENSE-MIT
-    - library_licenses/unicode-xid-LICENSE-APACHE
-    - library_licenses/unicode-xid-LICENSE-MIT
-    - library_licenses/unix_path-LICENSE-APACHE
-    - library_licenses/unix_path-LICENSE-MIT
-    - library_licenses/unix_str-LICENSE-APACHE
-    - library_licenses/unix_str-LICENSE-MIT
-    - library_licenses/url-LICENSE-APACHE
-    - library_licenses/url-LICENSE-MIT
-    - library_licenses/urlencoding-LICENSE
-    - library_licenses/uuid-LICENSE-APACHE
-    - library_licenses/uuid-LICENSE-MIT
-    - library_licenses/version_check-LICENSE-APACHE
-    - library_licenses/version_check-LICENSE-MIT
-    - library_licenses/walkdir-LICENSE-MIT
-    - library_licenses/want-LICENSE
-    - library_licenses/warp-LICENSE
-    - library_licenses/xml-rs-LICENSE
-    - library_licenses/yaml-rust-LICENSE-MIT
-    - library_licenses/zip-LICENSE
+    - THIRDPARTY.yml
+    - toolkit/content/license.html
   summary: |
     geckodriver is a proxy for using W3C WebDriver-compatible clients to
     interact with Gecko-based browsers.
