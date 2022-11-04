@@ -5,7 +5,6 @@
 set -o xtrace -o nounset -o pipefail -o errexit
 
 export RUST_BACKTRACE=1
-export CARGO_LICENSES_FILE=$SRC_DIR/$PKG_NAME-$PKG_VERSION-cargo-dependencies.json
 
 if [ $(uname) = Darwin ] ; then
   export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
@@ -18,9 +17,7 @@ cd testing/geckodriver
 cargo install --locked --root "$PREFIX" --path .
 
 # install cargo-license and dump licenses
-cargo install cargo-license
-cargo-license --json > $CARGO_LICENSES_FILE
-ls -lathr $CARGO_LICENSES_FILE
+cargo-bundle-licenses --format yaml --output $SRC_DIR/THIRDPARTY.yml
 
 # remove extra build files
 rm -f "${PREFIX}/.crates2.json"
