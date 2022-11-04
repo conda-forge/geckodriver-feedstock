@@ -1,4 +1,3 @@
-{% set name = "geckodriver" %}
 {% set version = "0.32.0" %}
 
 # sourced from:
@@ -10,14 +9,14 @@
 {% set changeset = "4563dd583110" %}
 
 package:
-  name: {{ name }}
+  name: geckodriver
   version: {{ version }}
 
 source:
-  - fn: {{ name }}-{{ version }}-{{ changeset }}-LICENSE.zip
+  - fn: geckodriver-{{ version }}-{{ changeset }}-LICENSE.zip
     url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/toolkit/content/license.html
     sha256: 090820705c9ebd57e92d7a45898622b3c694b3975281f051f126b63c852afdcd
-  - fn: {{ name }}-{{ version }}-{{ changeset }}.zip
+  - fn: geckodriver-{{ version }}-{{ changeset }}.zip
     # all of /testing because of other unpublished crates
     url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
     sha256: 82e2da17e80ebd4537dd7f6cf54ccb476c7b1fd020c33e360078c55ee8cc718e
@@ -36,7 +35,7 @@ requirements:
 
 test:
   source_files:
-    - {{ name }}-{{ version }}-cargo-dependencies.json
+    - geckodriver-{{ version }}-cargo-dependencies.json
   files:
     - test_selenium.py
   requires:
@@ -50,8 +49,8 @@ test:
     # this important just so we know that the version is accurate
     # https://github.com/mozilla/geckodriver/issues/1615
     - geckodriver --version | grep {{ version }}  # [not win]
-    - conda inspect linkages -p $PREFIX {{ name }}  # [not win]
-    - conda inspect objects -p $PREFIX {{ name }}  # [osx]
+    - conda inspect linkages -p $PREFIX geckodriver  # [not win]
+    - conda inspect objects -p $PREFIX geckodriver  # [osx]
     # TODO: may be needed
     # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]
     - pytest test_selenium.py
