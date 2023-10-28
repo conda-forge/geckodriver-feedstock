@@ -1,5 +1,6 @@
 build_platform:
   osx_arm64: osx_64
+compiler_stack: comp7
 conda_build:
   pkg_format: '2'
 conda_forge_output_validation: true
