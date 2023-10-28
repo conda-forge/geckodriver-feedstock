@@ -24,6 +24,8 @@ source:
 build:
   number: 1
   skip: true  # [win and vc<14]
+  script_env:
+    - MOZ_HEADLESS=1
 
 requirements:
   build:
