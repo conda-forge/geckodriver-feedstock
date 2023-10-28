@@ -5,9 +5,6 @@
 """
 import sys
 import os
-import subprocess
-import traceback
-import json
 import re
 import time
 from pathlib import Path
@@ -29,6 +26,7 @@ if os.environ["PKG_NAME"] == "firefox":
         r"""\s*</td>"""
     )
 
+
 @pytest.fixture
 def binary_paths():
     plat = sys.platform.lower()
@@ -36,13 +34,13 @@ def binary_paths():
         firefox = Path(os.environ["LIBRARY_BIN"]) / "firefox.exe"
         geckodriver = Path(os.environ["SCRIPTS"]) / "geckodriver.exe"
     else:
-        geckodriver = Path(sys.prefix) / "bin" / "geckodriver"
-        app_dir = Path(sys.prefix) / "bin" / "FirefoxApp"
+        geckodriver = Path(sys.prefix) / "bin/geckodriver"
+        app_dir = Path(sys.prefix) / "bin/FirefoxApp"
 
         if "linux" in plat:
             firefox = app_dir / "firefox"
         else:
-            firefox = app_dir / "Contents" / "MacOS" / "firefox"
+            firefox = app_dir / "Contents/MacOS/firefox"
 
     assert firefox.exists()
     assert geckodriver.exists()
@@ -51,7 +49,7 @@ def binary_paths():
 
 
 @pytest.fixture
-def driver(tmp_path, binary_paths):
+def driver(tmp_path: Path, binary_paths: list[Path]):
     firefox, geckodriver = binary_paths
     log = tmp_path / "geckodriver.log"
 
@@ -59,32 +57,38 @@ def driver(tmp_path, binary_paths):
     options.headless = True
     options.binary = FirefoxBinary(str(firefox))
 
-
     service = Service(
         executable_path=str(geckodriver),
         service_args=["--log", "trace"],
         # https://github.com/SeleniumHQ/seleniumhq.github.io/commit/c11605ec062e49b2cbf1a35ddca0bf78224cc75f
         log_path=str(log),
-        log_output=str(log)
+        log_output=str(log),
     )
 
-    driver = webdriver.Firefox(options=options, service=service)
+    def print_log():
+        if not log.exists():
+            raise RuntimeError(f"{log} does not exist!")
+        print(
+            "BEGIN geckodriver.log\n\n"
+            f"""{log.read_text(encoding="utf-8")}"""
+            "\n\nEND geckdriver.log"
+        )
 
-    yield driver
-
-    driver.quit()
-
-    print(
-        "BEGIN geckodriver.log\n\n"
-        f"""{log.read_text(encoding="utf-8")}"""
-        "\n\nEND geckdriver.log"
-    )
+    try:
+        driver = webdriver.Firefox(options=options, service=service)
+        yield driver
+        driver.quit()
+    finally:
+        print_log(log)
 
 
-@pytest.mark.parametrize("thing,url,expected_re", [
-    ["license", "about:license", LICENSE_CANARY],
-    ["support", "about:support", SUPPORT_CANARY],
-])
+@pytest.mark.parametrize(
+    "thing,url,expected_re",
+    [
+        ["license", "about:license", LICENSE_CANARY],
+        ["support", "about:support", SUPPORT_CANARY],
+    ],
+)
 def test_page(thing, url, expected_re, tmp_path, driver):
     html = tmp_path / f"{thing}.html"
     png = tmp_path / f"{thing}.png"
