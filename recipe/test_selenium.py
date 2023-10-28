@@ -55,6 +55,7 @@ def driver(tmp_path: Path, binary_paths: list[Path]):
 
     options = Options()
     options.headless = True
+    options.log.level = "trace"
     options.binary = FirefoxBinary(str(firefox))
 
     service = Service(
