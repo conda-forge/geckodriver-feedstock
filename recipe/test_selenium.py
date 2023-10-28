@@ -68,11 +68,14 @@ def driver(tmp_path: Path, binary_paths: list[Path]):
 
     def print_log():
         if not log.exists():
-            raise RuntimeError(f"{log} does not exist!")
+            print(f"{log} does not exist!")
+            return
         print(
-            "BEGIN geckodriver.log\n\n"
-            f"""{log.read_text(encoding="utf-8")}"""
-            "\n\nEND geckdriver.log"
+            f"BEGIN {log}",
+            "\n\n",
+            f"""{log.read_text(encoding="utf-8")}""",
+            "\n\n",
+            f"END {log}",
         )
 
     try:
