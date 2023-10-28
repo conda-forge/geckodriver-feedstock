@@ -83,7 +83,7 @@ def driver(tmp_path: Path, binary_paths: list[Path]):
         yield driver
         driver.quit()
     finally:
-        print_log(log)
+        print_log()
 
 
 @pytest.mark.parametrize(
