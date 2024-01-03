@@ -15,7 +15,7 @@ package:
 source:
   - fn: geckodriver-{{ version }}-{{ changeset }}-LICENSE.zip
     url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/toolkit/content/license.html
-    sha256: 671d4c84319d6580d69f5f86388625841c6b542be537dbb0bea55b45ff5814cb
+    sha256: d32bf257740479f7a7dd912a86110107e10502b77846c070e844ed12e26eb413
   - fn: geckodriver-{{ version }}-{{ changeset }}.zip
     # all of /testing because of other unpublished crates
     url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
