@@ -1,4 +1,4 @@
-{% set version = "0.34.0" %}
+{% set version = "0.35.0" %}
 
 # sourced from:
 # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
