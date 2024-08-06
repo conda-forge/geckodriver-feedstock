@@ -2,11 +2,11 @@
 
 # sourced from:
 # https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-{% set min_firefox = "102" %}
+{% set min_firefox = "115" %}
 
 # sourced from:
 # https://github.com/mozilla/geckodriver/releases
-{% set changeset = "c44f0d09630a" %}
+{% set changeset = "9f0a0036bea4" %}
 
 package:
   name: geckodriver
@@ -15,11 +15,11 @@ package:
 source:
   - fn: geckodriver-{{ version }}-{{ changeset }}-LICENSE.zip
     url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/toolkit/content/license.html
-    sha256: d32bf257740479f7a7dd912a86110107e10502b77846c070e844ed12e26eb413
+    sha256: 2dfd0e19250e76ccad5b8259e4772a4fca59c8171e8b1aadfd5d6e210b369afb
   - fn: geckodriver-{{ version }}-{{ changeset }}.zip
     # all of /testing because of other unpublished crates
     url: https://hg.mozilla.org/mozilla-central/archive/{{ changeset }}.zip/testing
-    sha256: 6a4ef666de9c2475c8fa5b0a78e93a600be269ebacf26ac5ef9d536a7dc1f9cd
+    sha256: 571d0d844cf1666ddfe8218f9e2c751e259c6933dab101ff3d0dcadc86d1cec8
 
 build:
   number: 0
@@ -32,7 +32,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('rust') }}
-    - sysroot_linux-64 2.17  # [linux64]
+    - {{ stdlib('c') }}
     - cargo-bundle-licenses
 
 test:
