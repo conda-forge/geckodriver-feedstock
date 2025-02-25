@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  # sourced from: https://github.com/mozilla/geckodriver/releases
+  version: 0.36.0
+  changeset: a3d508507022
+  # sourced from: https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
+  firefox_min: "115"
+
+package:
+  name: geckodriver
+  version: ${{ version }}
+
+source:
+  - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/toolkit/content/license.html
+    sha256: 985c5be428fbf09068f7e08ee393b0a3ff0985559db2c4f480461cd7a16e4f60
+    file_name: license.zip
+  # all of /testing because of other unpublished crates
+  - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/testing
+    sha256: e43825225081bc2abb5c684e9c9f5f13b300232c3e6b491fb39eb7098f940afe
+    file_name: testing.zip
+
+build:
+  number: 0
+  skip: win and vc<14
+  script:
+    file: build-geckodriver
+
+requirements:
+  build:
+    - ${{ compiler("c") }}
+    - ${{ compiler("cxx") }}
+    - ${{ compiler("rust") }}
+    - ${{ stdlib("c") }}
+    - cargo-bundle-licenses
+    - if: win
+      then:
+        - m2-unzip
+      else:
+        - unzip
+
+tests:
+  - files:
+      recipe:
+        - test_selenium.py
+    requirements:
+      run:
+        - firefox >=${{ firefox_min }}
+        - python >=${{ python_min }}
+        - selenium
+        - pytest
+        - if: win
+          then:
+            - m2-grep
+    script:
+      env:
+        MOZ_HEADLESS: "1"
+      content:
+        - geckodriver --version
+        - geckodriver --help
+        - geckodriver --version | grep -iE "${{ version | replace('.', '\\.') }}"
+        - pytest test_selenium.py
+
+about:
+  license: MPL-2.0
+  license_file:
+    - THIRDPARTY.yml
+    - license.html
+  summary: |
+    geckodriver is a proxy for using W3C WebDriver-compatible clients to
+    interact with Gecko-based browsers.
+  description: |
+    This program provides the HTTP API described by the WebDriver protocol to
+    communicate with Gecko browsers, such as Firefox. It translates calls into
+    the Marionette remote protocol by acting as a proxy between the local- and
+    remote ends.
+  homepage: https://github.com/mozilla/geckodriver
+  repository: https://searchfox.org/mozilla-central/source/testing/geckodriver
+  documentation: https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver
+
+extra:
+  recipe-maintainers:
+    - bollwyvl
