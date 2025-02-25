@@ -17,8 +17,11 @@ else
 fi
 
 unzip license.zip
-unzip testing.zip
-mv mozilla-central-*/* .
+unzip -q testing.zip
+
+cd "mozilla-central-*"
+
+copy toolkit/content/license.html "${SRC_DIR}"
 
 cd testing/geckodriver
 
