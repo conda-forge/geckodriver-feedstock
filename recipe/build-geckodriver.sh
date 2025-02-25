@@ -21,7 +21,7 @@ unzip -q testing.zip
 
 cd mozilla-central-*
 
-copy toolkit/content/license.html "${SRC_DIR}"
+cp toolkit/content/license.html "${SRC_DIR}"
 
 cd testing/geckodriver
 
