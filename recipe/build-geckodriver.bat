@@ -1,6 +1,10 @@
 @echo on
 set CARGO_PROFILE_RELEASE_STRIP=symbols
 
+unzip license.zip
+unzip testing.zip
+move mozilla-central-*\* .
+
 cd testing\geckodriver
 
 cargo install ^

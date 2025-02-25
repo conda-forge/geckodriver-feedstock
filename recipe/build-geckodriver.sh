@@ -16,6 +16,10 @@ else
   export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
 fi
 
+unzip license.zip
+unzip testing.zip
+mv mozilla-central-*/* .
+
 cd testing/geckodriver
 
 # build statically linked binary with Rust

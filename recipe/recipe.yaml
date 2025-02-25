@@ -15,9 +15,11 @@ package:
 source:
   - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/toolkit/content/license.html
     sha256: 985c5be428fbf09068f7e08ee393b0a3ff0985559db2c4f480461cd7a16e4f60
+    file_name: license.zip
   # all of /testing because of other unpublished crates
   - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/testing
     sha256: e43825225081bc2abb5c684e9c9f5f13b300232c3e6b491fb39eb7098f940afe
+    file_name: testing.zip
 
 build:
   number: 0
@@ -32,6 +34,11 @@ requirements:
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
+    - if: win
+      then:
+        - m2-unzip
+      else:
+        - unzip
 
 tests:
   - files:
