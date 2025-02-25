@@ -1,5 +1,4 @@
 alsa-lib
-alsa-tools
 gtk3
 gtk3-devel
 libX11
