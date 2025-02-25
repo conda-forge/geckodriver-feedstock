@@ -6,6 +6,8 @@ set -o xtrace -o nounset -o pipefail -o errexit
 
 export RUST_BACKTRACE=1
 
+export CARGO_PROFILE_RELEASE_STRIP=symbols
+
 if [ $(uname) = Darwin ] ; then
   export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
 else
@@ -13,12 +15,15 @@ else
 fi
 
 cd testing/geckodriver
+
 # build statically linked binary with Rust
-cargo install --locked --root "$PREFIX" --path .
+cargo install \
+  --no-track \
+  --locked \
+  --path . \
+  --profile release \
+  --root "$PREFIX"
 
-# install cargo-license and dump licenses
-cargo-bundle-licenses --format yaml --output $SRC_DIR/THIRDPARTY.yml
-
-# remove extra build files
-rm -f "${PREFIX}/.crates2.json"
-rm -f "${PREFIX}/.crates.toml"
+cargo-bundle-licenses \
+  --format yaml \
+  --output "${SRC_DIR}/THIRDPARTY.yml"

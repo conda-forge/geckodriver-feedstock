@@ -1,23 +1,20 @@
-:: NOTE: mostly derived from
-:: https://github.com/conda-forge/py-spy-feedstock/blob/master/recipe/bld.bat
+@echo on
+set CARGO_PROFILE_RELEASE_STRIP=symbols
 
 cd testing\geckodriver
 
-:: build
-cargo install --locked --root "%PREFIX%" --path . || goto :error
+cargo install ^
+    --no-track ^
+    --locked ^
+    --path . ^
+    --profile release ^
+    --root "%PREFIX%" ^
+    || exit 1
 
-:: move to scripts
-md %SCRIPTS% || echo "%SCRIPTS% already exists"
-move %PREFIX%\bin\geckodriver.exe %SCRIPTS%
+cargo-bundle-licenses ^
+    --format yaml ^
+    --output "%SRC_DIR%\THIRDPARTY.yml" ^
+    || exit 3
 
-cargo-bundle-licenses --format yaml --output %SRC_DIR%\THIRDPARTY.yml
-
-:: remove extra build files
-del /F /Q "%PREFIX%\.crates2.json"
-del /F /Q "%PREFIX%\.crates.toml"
-
-goto :EOF
-
-:error
-echo Failed with error #%errorlevel%.
-exit /b %errorlevel%
+if not exist "%SCRIPTS%" md "%SCRIPTS%
+move "%PREFIX%\bin\geckodriver.exe" "%SCRIPTS%"

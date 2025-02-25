@@ -54,7 +54,7 @@ tests:
       content:
         - geckodriver --version
         - geckodriver --help
-        - geckodriver --version | grep -iE "${{ version | replace('.'', '\\.'') }}"
+        - geckodriver --version | grep -iE "${{ version | replace('.', '\\.') }}"
         - pytest test_selenium.py
 
 about:
