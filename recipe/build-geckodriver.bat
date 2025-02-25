@@ -4,7 +4,7 @@ set CARGO_PROFILE_RELEASE_STRIP=symbols
 unzip license.zip
 unzip -q testing.zip
 
-cd "mozilla-central-*"
+cd mozilla-central-*
 
 copy toolkit\content\license.html "%SRC_DIR%"
 
