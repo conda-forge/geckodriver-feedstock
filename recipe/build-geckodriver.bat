@@ -4,7 +4,7 @@ set CARGO_PROFILE_RELEASE_STRIP=symbols
 unzip license.zip
 unzip testing.zip
 
-robocopy mozilla-central-* . /e /move
+robocopy "%SRC_DIR%\mozilla-central-*" "%SRC_DIR%" *.* /e /move
 
 cd testing\geckodriver
 
