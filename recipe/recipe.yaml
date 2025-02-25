@@ -18,7 +18,7 @@ source:
     file_name: geckodriver-${{ version }}-${{ changeset }}-LICENSE.zip
   # all of /testing because of other unpublished crates
   - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/testing
-    sha256: 571d0d844cf1666ddfe8218f9e2c751e259c6933dab101ff3d0dcadc86d1cec8
+    sha256: e43825225081bc2abb5c684e9c9f5f13b300232c3e6b491fb39eb7098f940afe
     file_name: geckodriver-${{ version }}-${{ changeset }}.zip
 
 build:
