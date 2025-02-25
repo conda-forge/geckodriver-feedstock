@@ -8,7 +8,9 @@ export RUST_BACKTRACE=1
 
 export CARGO_PROFILE_RELEASE_STRIP=symbols
 
-if [ $(uname) = Darwin ] ; then
+_UNAME="$(uname)"
+
+if [[ "${_UNAME}" = Darwin ]] ; then
   export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
 else
   export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
@@ -22,7 +24,7 @@ cargo install \
   --locked \
   --path . \
   --profile release \
-  --root "$PREFIX"
+  --root "${PREFIX}"
 
 cargo-bundle-licenses \
   --format yaml \
