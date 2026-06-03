@@ -2,30 +2,40 @@
 schema_version: 1
 
 context:
-  # sourced from: https://github.com/mozilla/geckodriver/releases
-  version: 0.36.0
-  changeset: a3d508507022
+  version: 0.37.0
   # sourced from: https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
   firefox_min: "115"
+  grep: ${{ "grep -iE" if unix else "findstr" }}
 
 package:
   name: geckodriver
   version: ${{ version }}
 
 source:
-  - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/toolkit/content/license.html
-    sha256: 985c5be428fbf09068f7e08ee393b0a3ff0985559db2c4f480461cd7a16e4f60
-    file_name: license.zip
-  # all of /testing because of other unpublished crates
-  - url: https://hg.mozilla.org/mozilla-central/archive/${{ changeset }}.zip/testing
-    sha256: e43825225081bc2abb5c684e9c9f5f13b300232c3e6b491fb39eb7098f940afe
-    file_name: testing.zip
+  url: https://github.com/mozilla/geckodriver/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 713f2b3029b6b7af485450528164c6571df273d72de6009352c5c3c0c3211d8c
 
 build:
   number: 0
   skip: win and vc<14
   script:
-    file: build-geckodriver
+    env:
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+      CARGO_PROFILE_RELEASE_LTO: fat
+    content:
+      - if: osx
+        then:
+          - export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
+      - if: linux
+        then:
+          - export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
+      - cargo auditable install --no-track --bins --locked --profile=release --path=. --root "${{ PREFIX }}"
+      - cargo-bundle-licenses --format=yaml --output=THIRDPARTY.yml
+      - if: win
+        then:
+          # Scripts used for historical reasons
+          - md "%PREFIX%\Scripts"
+          - move "%PREFIX%\bin\geckodriver.exe" "%PREFIX%\Scripts"
 
 requirements:
   build:
@@ -34,11 +44,7 @@ requirements:
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
-    - if: win
-      then:
-        - m2-unzip
-      else:
-        - unzip
+    - cargo-auditable
 
 tests:
   - files:
@@ -59,14 +65,14 @@ tests:
       content:
         - geckodriver --version
         - geckodriver --help
-        - geckodriver --version | grep -iE "${{ version | replace('.', '\\.') }}"
+        - geckodriver --version | ${{ grep }} "${{ version | replace('.', '\\.') }}"
         - pytest test_selenium.py
 
 about:
   license: MPL-2.0
   license_file:
     - THIRDPARTY.yml
-    - license.html
+    - LICENSE
   summary: |
     geckodriver is a proxy for using W3C WebDriver-compatible clients to
     interact with Gecko-based browsers.
@@ -75,8 +81,8 @@ about:
     communicate with Gecko browsers, such as Firefox. It translates calls into
     the Marionette remote protocol by acting as a proxy between the local- and
     remote ends.
-  homepage: https://github.com/mozilla/geckodriver
-  repository: https://searchfox.org/mozilla-central/source/testing/geckodriver
+  homepage: https://crates.io/crates/geckodriver
+  repository: https://github.com/mozilla/geckodriver
   documentation: https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver
 
 extra:

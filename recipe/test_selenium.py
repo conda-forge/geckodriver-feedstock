@@ -14,7 +14,6 @@ from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from textwrap import indent
 
 import pytest
@@ -28,6 +27,8 @@ if os.environ["PKG_NAME"] == "firefox":
         f"""{re.escape(os.environ["PKG_VERSION"])}"""
         r"""\s*</td>"""
     )
+
+os.environ.update(MOZ_HEADLESS="1")
 
 
 @pytest.fixture
@@ -57,8 +58,7 @@ def driver(tmp_path: Path, binary_paths: tuple[Path, Path]) -> webdriver.Firefox
     log = tmp_path / "geckodriver.log"
 
     options = Options()
-    options.headless = True
-    options.binary = FirefoxBinary(str(firefox))
+    options.binary_location = str(firefox)
 
     service = Service(
         executable_path=str(geckodriver),
