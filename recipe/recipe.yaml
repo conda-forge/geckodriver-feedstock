@@ -29,17 +29,8 @@ build:
       - if: linux
         then:
           - export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
-      - |-
-        cargo-auditable install
-          --no-track
-          --locked
-          --path=.
-          --profile=release
-          "--root=${{ PREFIX }}"
-      - |-
-        cargo-bundle-licenses
-          --format=yaml
-          --output=THIRDPARTY.yml
+      - cargo auditable install --no-track --bins --locked --profile=release --path=. --root "${{ PREFIX }}"
+      - cargo-bundle-licenses --format=yaml --output=THIRDPARTY.yml
 
 requirements:
   build:
@@ -85,8 +76,8 @@ about:
     communicate with Gecko browsers, such as Firefox. It translates calls into
     the Marionette remote protocol by acting as a proxy between the local- and
     remote ends.
-  homepage: https://github.com/mozilla/geckodriver
-  repository: https://searchfox.org/mozilla-central/source/testing/geckodriver
+  homepage: https://crates.io/crates/geckodriver
+  repository: https://github.com/mozilla/geckodriver
   documentation: https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver
 
 extra:

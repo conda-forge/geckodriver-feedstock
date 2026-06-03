@@ -8,5 +8,3 @@ github:
   tooling_branch_name: main
 provider:
   osx_arm64: default
-shellcheck:
-  enabled: true
