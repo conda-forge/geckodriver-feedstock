@@ -34,7 +34,8 @@ build:
       - if: win
         then:
           # Scripts used for historical reasons
-          - move "%PREFIX%\bin\geckodriver.exe" "%PREFIX%\Scripts\geckodriver.exe"
+          - md "%PREFIX%\Scripts"
+          - move "%PREFIX%\bin\geckodriver.exe" "%PREFIX%\Scripts"
 
 requirements:
   build:
