@@ -3,14 +3,14 @@ About geckodriver-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/geckodriver-feedstock/blob/main/LICENSE.txt)
 
-Home: https://github.com/mozilla/geckodriver
+Home: https://crates.io/crates/geckodriver
 
 Package license: MPL-2.0
 
 Summary: geckodriver is a proxy for using W3C WebDriver-compatible clients to
 interact with Gecko-based browsers.
 
-Development: https://searchfox.org/mozilla-central/source/testing/geckodriver
+Development: https://github.com/mozilla/geckodriver
 
 Documentation: https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver
 
